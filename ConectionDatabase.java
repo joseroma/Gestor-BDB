@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ConectionDatabase {
 	public static void main(String[] args) {  
-        String connectionString = "jdbc:mysql://localhost:3306/bdb_cica?user=root&password=MyNewPass&autoReconnect=true&useSSL=false" ;
+        String connectionString = "jdbc:mysql://localhost:3306/bdb_sica?user=root&password=MyNewPass&autoReconnect=true&useSSL=false" ;
       
         Connection connection = null;
         Statement statement = null;   
@@ -28,7 +28,7 @@ public class ConectionDatabase {
         	statement = connection.createStatement(); 
         	
         	//Guardar los nombres de todas las tablas
-        	selectSql = "select * from information_schema.tables where table_schema = '<bdb_cica>';";
+        	selectSql = "select * from information_schema.tables where table_schema = '<bdb_sica>';";
         	List<String> nombreTablas = new ArrayList<>();  
             result = statement.executeQuery(selectSql);
             while (result.next())  { nombreTablas.add(result.getString(1));}
