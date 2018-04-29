@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ConectionDatabase {
 	public static void main(String[] args) {  
-        String connectionString = "jdbc:mysql://localhost:3306/bdb_sica?user=root&password=MyNewPass&autoReconnect=true&useSSL=false" ;
+        String connectionString = "" ;
       
         Connection connection = null;
         Statement statement = null;   
@@ -23,19 +23,19 @@ public class ConectionDatabase {
         
          try { 
         
-        	Class.forName("com.mysql.jdbc.Driver"); 
+        	Class.forName(""); 
         	connection = DriverManager.getConnection(connectionString);
         	statement = connection.createStatement(); 
         	
         	//Guardar los nombres de todas las tablas
-        	selectSql = "select * from information_schema.tables where table_schema = '<bdb_sica>';";
+        	selectSql = "select * from information_schema.tables where table_schema = '';";
         	List<String> nombreTablas = new ArrayList<>();  
             result = statement.executeQuery(selectSql);
             while (result.next())  { nombreTablas.add(result.getString(1));}
             //Realizar consulta a todas las tablas
             for (int i = 0; i < nombreTablas.size(); i++) {
             	String table = nombreTablas.get(i);
-            	selectSql =  "ALTER TABLE “ + table + “ ENGINE=InnoDB";
+            	selectSql =  "";
       			statement = connection.createStatement();  
                 result = statement.executeQuery(selectSql);
             }
