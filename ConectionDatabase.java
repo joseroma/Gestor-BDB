@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ConectionDatabase {
 	public static void main(String[] args) {  
-        String connectionString = "jdbc:mysql://localhost:3306/bdb_sisa?user=root&password=bdbg1&autoReconnect=true&useSSL=false" ;
+        String connectionString = "" ;
       
         Connection connection = null;
         Statement statement = null;   
@@ -23,20 +23,11 @@ public class ConectionDatabase {
         
          try { 
         
-        	 Class.forName("com.mysql.jdbc.Driver");
+        	 Class.forName("");
         	 connection = DriverManager.getConnection(connectionString);
         	 statement = connection.createStatement(); 
         	
-        	//Guardar los nombres de todas las tablas
-        selectSql = "select * from information_schema.tables where table_schema = '<bdb_sisa>';";
-        	List<String> nombreTablas = new ArrayList<>();  
-            result = statement.executeQuery(selectSql);
-            while (result.next())  { nombreTablas.add(result.getString(1));}
-            //Realizar consulta a todas las tablas
-            for (int i = 0; i < nombreTablas.size(); i++) {
-            	String table = nombreTablas.get(i);
-           
-            }
+   
             
            
             long start = System.currentTimeMillis();
@@ -53,7 +44,7 @@ public class ConectionDatabase {
             
        
             while (result.next())  { 
-            	System.out.println(result.getInt(1)+ " "+ result.getString(2));
+            	System.out.println(result.getInt(1)+ " "+ result.getInt(2));
               //columnas, una por cada atributo pedido
     
             } 
