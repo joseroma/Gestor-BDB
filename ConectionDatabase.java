@@ -13,23 +13,32 @@ import java.sql.*;
 
 public class ConectionDatabase {
 	public static void main(String[] args) {  
-        String connectionString = "" ;
+        String connectionString = "jdbc:postgresql://localhost:5432/bdb_cica?user=postgres&password=name&autoReconnect=true&useSSL=false" ;
       
         Connection connection = null;
         Statement statement = null;   
         ResultSet result = null;  
         String selectSql="";
         
-        
+  
          try { 
         
-        	 Class.forName("");
+        	 Class.forName("org.postgresql.Driver");
         	 connection = DriverManager.getConnection(connectionString);
         	 statement = connection.createStatement(); 
         	
-   
-            
+        /*	//Guardar los nombres de todas las tablas
+        selectSql = "select * from information_schema.tables where table_schema = '<bdb_cica>';";
+        	List<String> nombreTablas = new ArrayList<>();  
+            result = statement.executeQuery(selectSql);
+            while (result.next())  { nombreTablas.add(result.getString(1));}
+            //Realizar consulta a todas las tablas
+            for (int i = 0; i < nombreTablas.size(); i++) {
+            	String table = nombreTablas.get(i);
            
+            }
+            
+         */
             long start = System.currentTimeMillis();
             Thread.sleep(2000);
             //REALIZAR CONSULTA
@@ -44,7 +53,7 @@ public class ConectionDatabase {
             
        
             while (result.next())  { 
-            	System.out.println(result.getInt(1)+ " "+ result.getInt(2));
+            	System.out.println(result.getInt(1)+ " "+ result.getString(2));
               //columnas, una por cada atributo pedido
     
             } 
@@ -81,7 +90,4 @@ public class ConectionDatabase {
 	
 	*/
 	
-} 
-
-
-
+}
