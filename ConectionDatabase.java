@@ -57,7 +57,7 @@ public class ConectionDatabase {
             
        
             while (result.next())  { 
-            	System.out.println(result.getInt(1)+ " "+ result.getString(2));
+            	System.out.println(result.getInt(1)+ " "+ result.getInt(2)+ " "+ result.getString(3));
               //columnas, una por cada atributo pedido
     
             } 
