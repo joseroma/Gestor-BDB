@@ -7,7 +7,10 @@ import org.json.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +33,13 @@ public class PetitionController {
 
 	@RequestMapping(value="/api/hi", method = RequestMethod.POST)
 	@ResponseBody
-	public List<String> getFoosBySimplePath1(@RequestBody String body) throws JSONException {
+	public List<Integer> getFoosBySimplePath1(@RequestBody String body) throws JSONException {
 
 	JSONArray jsonarray = new JSONArray(body);
 
 
 	//jsonarray guarda una petición en cada pos (2 peticiones-> length2,..)
-	List<String> consultas = new ArrayList<String>();
+	Map <String, String> consultaGestor = new HashMap<String, String>();
 	String groupBy="";
 	for (int i = 0; i < jsonarray.length(); i++) {
 
@@ -46,9 +49,9 @@ public class PetitionController {
 	    int num_col = peticion.getInt("colNum");
 	    int num_tab = peticion.getInt("tabNum");
 	    int num_cond = peticion.getInt("condNum");
-	    if(peticion.has("groupBy")){
-	    	groupBy = peticion.getString("groupBy");
-	    }
+	    if(peticion.has("groupBy")) groupBy = peticion.getString("groupBy");
+	    String gestor = peticion.getString("bd");
+	    
 
 
 	    List<String> listCol = new ArrayList<String>();
@@ -76,21 +79,23 @@ public class PetitionController {
 	    System.out.println("tablas: " + listTab + "\n");
 	    System.out.println("condiciones: " + listCond + "\n");
 
-	    //CREAR CONSULTA (cada una guardar en un string y añadir a peticiones.add)
+	    //CREAR CONSULTA 
+
+	    //Lista columnas
 	    String select="";
 	    for(int s=0; s<num_col;s++) {
 	    	if(s==num_col-1) select = select + listCol.get(s);
 	    	else select = select + listCol.get(s) + ", ";
-
 	    }
 
+	    //Lista tablas
 	    String from="";
 	    for(int f=0; f<num_tab; f++) {
 	    	if(f==num_tab-1) from = from + listTab.get(f);
 	    	else select = from = from + listTab.get(f) + ", ";
-
 	    }
-
+	    
+	    //Lista condiciones
 	    String where="";
 	    for(int w=0; w<num_cond; w++) {
 	    	if (w==num_cond-1)
@@ -99,34 +104,57 @@ public class PetitionController {
 	    		where = where + listCond.get(w) + " AND ";
 	    }
 
-
+	    //Crear consulta
 	    String consulta="";
-	    consulta = "SELECT " + select +  " FROM " + from + " WHERE " + where;
-	    if(!groupBy.equals("")) consulta = consulta + " GROUP BY " + groupBy + ";";
-	    else consulta = consulta +";";
-	    //VER QUE PASA SI NO PONGO GROUP BY? COMPROBAR QUE EXISTA ANTES DE GUARDARLO???
-
-	    consultas.add(consulta);
-
-
+	    
+	    //Consulta Mongo db (no relacional)
+	    if(gestor.equalsIgnoreCase("mongodb")) {
+	    	//CREAR
+	    	consultaGestor.put(consulta, gestor);
+	    }
+	    
+	    //Consulta relacional
+	    else {
+	    	consulta = "SELECT " + select +  " FROM " + from + " WHERE " + where;
+		    if(!groupBy.equals("")) consulta = consulta + " GROUP BY " + groupBy + ";";
+		    else consulta = consulta +";";
+		    consultaGestor.put(consulta, gestor);
+	    }
+	    
 	}
+	
+		
 
 	List<Integer> tiemposConsulta = new ArrayList<Integer>();
-	for(int con =0; con<consultas.size(); con++) {
-		System.out.println(consultas.get(con) + "\n");
-
-		/*swith(gestor)
-		 * 	if(mariadb) crear obj maradb y mandar
-		 * else if(postgre) ...
-		 * POR AHORA SOLO CON MARIADB
-		 * */
-		ConnectionPostgree cmdb = new ConnectionPostgree();
-		tiemposConsulta.addAll(cmdb.HacerConsulta(consultas.get(con)));
+	
+	for(Entry<String, String> entry: consultaGestor.entrySet()) {
+		System.out.println(entry.getKey() + "\n");
+		
+		switch(entry.getValue()) {
+		case "mongodb":
+			ConnectionNoSQL cnn = new ConnectionNoSQL();
+			tiemposConsulta.addAll(cnn.HacerConsulta(entry.getKey()));
+		case "mariadb":
+			ConnectionMariaDB cnn_mdb = new ConnectionMariaDB();
+			tiemposConsulta.addAll(cnn_mdb.HacerConsulta(entry.getKey()));
+		case "psql":
+			ConnectionPostgree cnn_ps = new ConnectionPostgree();
+			tiemposConsulta.addAll(cnn_ps.HacerConsulta(entry.getKey()));
+		case "mysql":
+			ConnectionMysql cnn_mys = new ConnectionMysql();
+			tiemposConsulta.addAll(cnn_mys.HacerConsulta(entry.getKey()));
+			
+		default: 
+			System.out.println("no ha funsionao");
+		}
+		
+		
 		//MANDAR TIEMPOS A INTERFAZ
-
-
 	}
-	return consultas;
+	
+	
+	
+	return tiemposConsulta; //DEVUELVO NOSQL?? TIEMPO??
 
 
 	}
