@@ -1,0 +1,119 @@
+.app{
+	border-radius: 4px;
+	margin-top: 20px;
+	padding: 30px;
+	background: #fff;
+}
+
+.border{
+	background: #BDBDBD;
+
+}
+
+.desplaza {
+	padding-left: 0.5em;
+	padding-bottom: 1em;
+	font-size: 40px;
+	border-left: 10px solid #424242;
+  background-color: lightgrey;
+	background-image: url(https://ak2.picdn.net/shutterstock/videos/499042/thumb/1.jpg);
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+
+
+.cajatabla{
+	background: #848484;
+	padding-left: 5em;
+}
+
+.aviso{
+	padding-left: 5em;
+	padding-top: 0.5em;
+}
+
+
+
+.example-radio-group {
+	display: inline-flex;
+	flex-direction: column;
+  }
+
+  .example-radio-button {
+	margin: 5px;
+  }
+
+  .example-selected-value {
+	margin: 15px 0;
+  }
+
+	.trans{
+		justify-content: center;
+	}
+.panel-title{
+border-bottom: 2px solid  #5882FA;
+}
+
+.tit-tabla {
+	border-bottom: 2px solid  #5882FA;
+}
+
+.titulo-datos{
+	border-bottom: 2px solid  #5882FA;
+}
+
+.botones-abajo{
+	text-align: center;
+}
+
+/* Style the tab */
+.tab {
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+	background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+	background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
+}
+
+.botonOdiaNaira{
+	border-radius: 8px;
+	border: 2px solid #ccc;
+	
+	background: rgba(76,255,210,1);
+	background: -moz-linear-gradient(left, rgba(76,255,210,1) 0%, rgba(76,255,210,1) 9%, rgba(255,146,10,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(76,255,210,1)), color-stop(9%, rgba(76,255,210,1)), color-stop(100%, rgba(255,146,10,1)));
+	background: -webkit-linear-gradient(left, rgba(76,255,210,1) 0%, rgba(76,255,210,1) 9%, rgba(255,146,10,1) 100%);
+
+
+	height:50px;
+	width:200px;
+
+}
