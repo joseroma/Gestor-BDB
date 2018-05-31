@@ -6,6 +6,7 @@
   - Tratar de incorporar Docker para poder usar MySQL
   - Documentar todo el proceso (Latex)
   - Pensar presentación
+  - Comprobar las BD para todos los gestores y asegurarse de que estén bien
   
   
   
