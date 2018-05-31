@@ -109,7 +109,7 @@ public class PetitionController {
 	    
 	    //Consulta Mongo db (no relacional)
 		if(gestor.equals("mongodb")) {
-			consulta = "db." + from + ".find({" +  where +"})";
+			consulta = "db." + from + ".find({" +  where +"});";
 			consultaGestor.put(consulta, gestor);
 		}
 		//Consulta xml
@@ -117,6 +117,7 @@ public class PetitionController {
 		else if(gestor.equals("XML")) {
 			consulta = "for $x in doc(\"/db/pruebecita.xml\")//table_data/row/field[@name=\"gene_id\"]\n" +
 					"return $x/../field[@name=\"biotype\"]";
+			consultaGestor.put(consulta, gestor);
 		}
 	    //Consulta relacional
 	    else {

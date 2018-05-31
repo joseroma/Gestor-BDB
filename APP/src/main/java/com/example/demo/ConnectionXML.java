@@ -14,7 +14,7 @@ import java.sql.*;
 public class ConnectionXML {
 
     //Definimos la URL con la que vamos a trabajar
-    String connectionString =  "\"xmldb:exist://localhost:9080/exist/xmlrpc\";" ;
+    String connectionString =  "xmldb:exist://localhost:9080/exist/xmlrpc" ;
 
     //Inicializamos los parámetros necesarios
     Connection connection = null;

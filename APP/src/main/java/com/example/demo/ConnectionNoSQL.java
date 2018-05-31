@@ -16,7 +16,7 @@ public class ConnectionNoSQL {
 
 	
 	//Definimos la URL con la que vamos a trabajar
-	String connectionString = "jdbc:mongo://127.0.0.1:27017/bdb_sica";
+	String connectionString = "jdbc:mongo://localhost:27017/bdb_sica";
 	                   
 	
    //Inicializamos los parámetros necesarios
@@ -28,24 +28,27 @@ public class ConnectionNoSQL {
 	    public List<Float> HacerConsulta(String consulta) {
 
 	       try {
-	           
-	    	   Class.forName("mongodb.jdbc.MongoDriver");
+
+			   Class.forName("mongodb.jdbc.MongoDriver");
 	           connection = DriverManager.getConnection(connectionString, "root", "name");
 	           statement = connection.createStatement();
+			   long start = System.currentTimeMillis();
+			   Thread.sleep(2000);
 	           selectSql = consulta;
 	           result = statement.executeQuery(selectSql);
-	           
-	           /* ESTO NO VALEEEEE
-	           int cont = 0;
-	           while (result.next()){
-	               tiempos.add(result.getInt(cont));
-	               System.out.println(result.getInt(1)+ " "+ result.getString(2));
-	               cont++;
-	              */
+
+			   while (result.next()) {}
+
+			   long elapsedTimeMillis = System.currentTimeMillis() - start;
+			   float elapsedTimeSec = elapsedTimeMillis/1000F;
+			   tiempos.add(elapsedTimeSec);
+
 	           }
 	          
 	       
-	    	catch (Exception e) { e.printStackTrace(); }
+	    	catch (Exception e) {
+	       	System.out.println("ERROR: Unable to load SQLServer JDBC Driver");
+	       	e.printStackTrace(); }
 	       
 	    	finally {
 	           if (result != null) try {

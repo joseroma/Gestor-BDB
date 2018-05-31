@@ -25,27 +25,33 @@ public class ConnectionMariaDB {
 		    	try{ 
 		    		Class.forName("com.mysql.jdbc.Driver"); 
 		            connection = DriverManager.getConnection(connectionString);
-		            statement = connection.createStatement(); 
+		            statement = connection.createStatement();
+					long start = System.currentTimeMillis();
+					Thread.sleep(2000);
 		            selectSql = consulta;
 		           	result = statement.executeQuery(selectSql);
-		           	//HAY QUE QUE HACERLO SEGUN COLS!! hacer esto en la otra clase????
-		           	int cont=0;
-		           	while (result.next())  {
-		           		tiempos.add(result.getFloat(cont));
-		           		cont++;
-		             }
-		          	}
-		           
-		           catch (Exception e) {  e.printStackTrace(); } 
-		           
-		           finally {  
-		           	if (result != null) try { result.close(); } catch(Exception e) {}  
-		               if (statement != null) try { statement.close(); } catch(Exception e) {}  
-		               if (connection != null) try { connection.close(); } catch(Exception e){}    
-		           }  
-		    	
-			return tiempos;
-		    }      
-		       
+					while (result.next())  {}
+					long elapsedTimeMillis = System.currentTimeMillis() - start;
+					float elapsedTimeSec = elapsedTimeMillis/1000F;
+					tiempos.add(elapsedTimeSec);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					if (result != null) try {
+						result.close();
+					} catch (Exception e) {
+					}
+					if (statement != null) try {
+						statement.close();
+					} catch (Exception e) {
+					}
+					if (connection != null) try {
+						connection.close();
+					} catch (Exception e) {
+					}
+				}
+				return tiempos;
+			}
 
 		}  
