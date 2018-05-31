@@ -19,9 +19,9 @@ public class ConnectionMysql {
 	    Statement statement = null;   
 	    ResultSet result = null;  
 	    String selectSql="";
-	    List<Integer> tiempos = new ArrayList<Integer>();
+	    List<Float> tiempos = new ArrayList<Float>();
 	    
-	    public List<Integer> HacerConsulta(String consulta) {
+	    public List<Float> HacerConsulta(String consulta) {
 	    	
 	    	try{ 
 	    		Class.forName("com.mysql.jdbc.Driver"); 
@@ -32,7 +32,7 @@ public class ConnectionMysql {
 	           	//HAY QUE QUE HACERLO SEGUN COLS!
 	           	int cont=0;
 	           	while (result.next())  {
-	           		tiempos.add(result.getInt(cont));
+	           		tiempos.add(result.getFloat(cont));
 	           		cont++;
 	             }
 	          	}

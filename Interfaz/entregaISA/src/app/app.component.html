@@ -165,18 +165,28 @@
           </div>
         </div>
       </div>
+      <div>
+      	<!--Aquí poner en un futuro las distintas DB que queremos buscar-->
+      </div>
     </div>
-    <div class="row panel panel-footer" style="padding-left: 200px">
-      <div style="padding-right: 150px">
+    <div class="row panel panel-footer" style="padding-left: 150px">
+      <div style="padding-right: 80px">
         <input type="radio" value="mysql"  name="bd" [(ngModel)]="bd" > MySql
         <input type="radio" value="psql" name="bd" [(ngModel)]="bd"> PSQL
         <input type="radio" value="mariadb" name="bd" [(ngModel)]="bd"> MariaDB
+        <input type="radio" value="XML" name="bd" [(ngModel)]="bd"> XML
+        <input type="radio" value="mongodb" name="bd" [(ngModel)]="bd"> MongoDB
       </div>
+      <div class="form-group">
       <button class="btn btn-secondary" (click)="apareceGroup()">Group by</button>
       <div [hidden]="ocultaGroupBy">
-        <input  style="margin-left: 20px" id="groupBy" name="groupBy" [(ngModel)]="groupBy" type="text" >  
+        <input  style="margin-left: 100px" id="groupBy" name="groupBy" [(ngModel)]="groupBy" type="text" >  
       </div>
-       <button type="submit" (click)="savePetition(petitionForm)" class="btn btn-primary" style="margin-left: 40px">Crear consulta</button>
+
+   
+  </div>
+      <button type="submit" (click)="savePetition(petitionForm)" class="btn btn-primary" style="margin-left: 40px">Crear consulta</button>
+
     </div>
   </div>
 </form>
@@ -194,9 +204,8 @@
             <th>Numero de condiciones</th>
             <th>Condiciones</th>
             <th> Group by</th>
-            <div [hidden]="mostrarResul">
               <th>Tiempos</th>
-            </div>
+         
           </tr>
             </thead>
               <tbody>
@@ -207,16 +216,15 @@
                  <td>{{petit.tab1}} {{petit.tab2}} {{petit.tab3}} {{petit.tab4}} {{petit.tab5}} {{petit.tab6}}</td>
                  <td>{{petit.condNum}}</td>
                  <td>{{petit.cond1}} {{petit.cond2}} {{petit.cond3}} {{petit.cond4}} {{petit.cond5}} {{petit.cond6}}</td>
-                 <td>{{petit.groupBy}}</td>  
+                 <td>{{petit.groupBy}}</td> 
+                 <td>{{tiempos[i]}}</td> 
                  <td>
                   <div class="btn-group">
                      <a (click)="editPetition(i)" class="btn btn-light"> Editar </a>
                      <a (click)="deletePetition(i)" class="btn btn-danger"> Borrar  </a>
                   </div>
                 </td>
-                <div  [hidden]="mostrarResul">
-                 <td>{{tiempos[i]}}</td>
-                </div>
+                 
                 </tr>
              </tbody>
            </table>
@@ -226,6 +234,11 @@
   </div>
         
 <div class="row" style="padding-left: 700px">
-  <button (click)="enviarPost()" class="btn btn-primary">Send petitions</button>
+	<div class="form-group">
+	  <button (click)="enviarPost()" class="btn btn-primary">Send petitions</button>
+	  <button (click)="limpiar()" class="btn btn-secondary">Clean</button>
+	<div>
 </div>
+
+
         

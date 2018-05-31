@@ -21,8 +21,8 @@ public class ConnectionPostgree {
     Statement statement = null;
     ResultSet result = null;
     String selectSql="";
-   List<Integer> tiempos = new ArrayList<Integer>();
-   public List<Integer> HacerConsulta(String consulta) {
+   List<Float> tiempos = new ArrayList<Float>();
+   public List<Float> HacerConsulta(String consulta) {
 
        try {
            //Iniciamos el driver
@@ -32,17 +32,16 @@ public class ConnectionPostgree {
            //Crea un objeto SQLServerStatement para enviar instrucciones SQL a la base de datos.
            statement = connection.createStatement();
            //Guardamos la consulta que queremos en una variable
+           long start = System.currentTimeMillis();
+           Thread.sleep(2000);
            selectSql = consulta;
            //Ejecuta la instrucción SQL especificada y devuelve una sola SQLServerResultSet objeto.
            result = statement.executeQuery(selectSql);
+           while (result.next())  {}
+           long elapsedTimeMillis = System.currentTimeMillis() - start;
+           float elapsedTimeSec = elapsedTimeMillis/1000F;
+           tiempos.add(elapsedTimeSec);
 
-           //Recorremos y añadimos los resultados a la lista de salida
-           int cont = 0;
-           while (result.next()){
-               tiempos.add(result.getInt(cont));
-               System.out.println(result.getInt(1)+ " "+ result.getString(2));
-               cont++;
-           }
        } catch (Exception e) {
            e.printStackTrace();
        } finally {

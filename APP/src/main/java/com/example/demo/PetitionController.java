@@ -33,7 +33,7 @@ public class PetitionController {
 
 	@RequestMapping(value="/api/hi", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Integer> getFoosBySimplePath1(@RequestBody String body) throws JSONException {
+	public List<Float> getFoosBySimplePath1(@RequestBody String body) throws JSONException {
 
 	JSONArray jsonarray = new JSONArray(body);
 
@@ -108,11 +108,16 @@ public class PetitionController {
 	    String consulta="";
 	    
 	    //Consulta Mongo db (no relacional)
-	    if(gestor.equalsIgnoreCase("mongodb")) {
-	    	//CREAR
-	    	consultaGestor.put(consulta, gestor);
-	    }
-	    
+		if(gestor.equals("mongodb")) {
+			consulta = "db." + from + ".find({" +  where +"})";
+			consultaGestor.put(consulta, gestor);
+		}
+		//Consulta xml
+
+		else if(gestor.equals("XML")) {
+			consulta = "for $x in doc(\"/db/pruebecita.xml\")//table_data/row/field[@name=\"gene_id\"]\n" +
+					"return $x/../field[@name=\"biotype\"]";
+		}
 	    //Consulta relacional
 	    else {
 	    	consulta = "SELECT " + select +  " FROM " + from + " WHERE " + where;
@@ -125,27 +130,43 @@ public class PetitionController {
 	
 		
 
-	List<Integer> tiemposConsulta = new ArrayList<Integer>();
+	List<Float> tiemposConsulta = new ArrayList<Float>();
 	
 	for(Entry<String, String> entry: consultaGestor.entrySet()) {
-		System.out.println(entry.getKey() + "\n");
-		
-		switch(entry.getValue()) {
-		case "mongodb":
-			ConnectionNoSQL cnn = new ConnectionNoSQL();
-			tiemposConsulta.addAll(cnn.HacerConsulta(entry.getKey()));
-		case "mariadb":
-			ConnectionMariaDB cnn_mdb = new ConnectionMariaDB();
-			tiemposConsulta.addAll(cnn_mdb.HacerConsulta(entry.getKey()));
-		case "psql":
-			ConnectionPostgree cnn_ps = new ConnectionPostgree();
-			tiemposConsulta.addAll(cnn_ps.HacerConsulta(entry.getKey()));
-		case "mysql":
-			ConnectionMysql cnn_mys = new ConnectionMysql();
-			tiemposConsulta.addAll(cnn_mys.HacerConsulta(entry.getKey()));
-			
-		default: 
-			System.out.println("no ha funsionao");
+
+		System.out.println("KEY:"+ entry.getKey() + "\n");
+        System.out.println("VALUE" + entry.getValue() + "\n");
+
+		if(entry.getValue().equals("mongodb")) {
+            ConnectionNoSQL cnn = new ConnectionNoSQL();
+            tiemposConsulta.addAll(cnn.HacerConsulta(entry.getKey()));
+            System.out.println("Case nosql: " + entry.getValue() + "\n");
+        }
+        else if (entry.getValue().equals("mariadb")) {
+            ConnectionMariaDB cnn_mdb = new ConnectionMariaDB();
+            tiemposConsulta.addAll(cnn_mdb.HacerConsulta(entry.getKey()));
+            System.out.println("Case mariadb" + entry.getValue() + "\n");
+        }
+        else if (entry.getValue().equals("psql")){
+		    ConnectionPostgree cnn_ps = new ConnectionPostgree();
+		    tiemposConsulta.addAll(cnn_ps.HacerConsulta(entry.getKey()));
+		    System.out.println("case psql : "+ entry.getValue() + "\n");
+		}
+		else if (entry.getValue().equals("mysql")){
+		    ConnectionMysql cnn_mys = new ConnectionMysql();
+		    tiemposConsulta.addAll(cnn_mys.HacerConsulta(entry.getKey()));
+		    System.out.println("case mysql: " + entry.getValue() + "\n");
+		}
+		else if (entry.getValue().equals("XML")){
+			ConnectionXML cnn_xml = new ConnectionXML();
+			tiemposConsulta.addAll(cnn_xml.HacerConsulta(entry.getKey()));
+			System.out.println("case mysql: " + entry.getValue() + "\n");
+		}
+
+
+		else{
+		    System.out.println("no ha funsionao");
+            System.out.println(entry.getValue());
 		}
 		
 		

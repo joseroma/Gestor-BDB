@@ -24,8 +24,8 @@ public class ConnectionNoSQL {
 	    Statement statement = null;
 	    ResultSet result = null;
 	    String selectSql="";
-	    List<Integer> tiempos = new ArrayList<Integer>();
-	    public List<Integer> HacerConsulta(String consulta) {
+	    List<Float> tiempos = new ArrayList<Float>();
+	    public List<Float> HacerConsulta(String consulta) {
 
 	       try {
 	           

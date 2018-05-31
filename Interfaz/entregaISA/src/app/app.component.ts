@@ -23,7 +23,7 @@ export class AppComponent {
   hideUpdate:boolean = true;
   mostrarResul:boolean=true;
   petition =[];
-  tiempos = [1.2,1.3,0.8,0.5,2.1,1.3,1.4,0.7,0.4,0.6];
+  tiempos = {};
 	model2:any={};
 	ocultaGroupBy:boolean=true;
 
@@ -32,11 +32,13 @@ export class AppComponent {
   }
 
   enviarPost():void{
-		const req= this._http.post("http://localhost:8080/api/hi/", this.petition,{responseType: 'text'} )
+		const req= this._http.post("http://localhost:8080/api/hi/", this.petition,{responseType: 'json'} )
 		.subscribe(
 			res=> {
 				console.log("Peticion POST realizada al servidor");
 				console.log(res);
+				this.tiempos=res;
+				this.mostrarResul=false;
 				console.log("Esperando respuesta...");
 			},
 			err=>{
@@ -54,13 +56,11 @@ export class AppComponent {
     	this.ocultaGroupBy=true;
 	}
 
-	resultados():void{
-		this.mostrarResul=false;
-	}
 
 	limpiar():void{
 		this.mostrarResul=true;
 		this.petition=[];
+		this.tiempos=[];
 	}
 
 	apareceGroup():void{

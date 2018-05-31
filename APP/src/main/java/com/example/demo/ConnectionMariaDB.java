@@ -13,14 +13,14 @@ import java.sql.*;
 
 public class ConnectionMariaDB {
 	
-		String connectionString = "jdbc:mysql://localhost:3306/bdb_sisa?user=root&password=bdbg1&autoReconnect=true&useSSL=false" ;
+		String connectionString = "jdbc:mysql://localhost:3306/bdb_sisa?user=root&password=name&autoReconnect=true&useSSL=false" ;
 		 Connection connection = null;
 		    Statement statement = null;   
 		    ResultSet result = null;  
 		    String selectSql="";
-		    List<Integer> tiempos = new ArrayList<Integer>();
+		    List<Float> tiempos = new ArrayList<Float>();
 		    
-		    public List<Integer> HacerConsulta(String consulta) {
+		    public List<Float> HacerConsulta(String consulta) {
 		    	
 		    	try{ 
 		    		Class.forName("com.mysql.jdbc.Driver"); 
@@ -31,7 +31,7 @@ public class ConnectionMariaDB {
 		           	//HAY QUE QUE HACERLO SEGUN COLS!! hacer esto en la otra clase????
 		           	int cont=0;
 		           	while (result.next())  {
-		           		tiempos.add(result.getInt(cont));
+		           		tiempos.add(result.getFloat(cont));
 		           		cont++;
 		             }
 		          	}
