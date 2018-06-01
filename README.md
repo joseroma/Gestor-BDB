@@ -9,6 +9,7 @@
   - Comprobar las BD para todos los gestores y asegurarse de que estén bien
   
   
+  Para modificar el archivo generado, entraremos dentro de la carteta de *Documentacion formato TFG/ 1. Plantilla*. El archivo de latex del formato TFG será el documento A0MiProyectoFinDeCarrera.tex. 
   
   
   Un wen vinito
