@@ -115,7 +115,7 @@ public class PetitionController {
 		//Consulta xml
 
 		else if(gestor.equals("XML")) {
-			consulta = "for $x in doc(\"/db/pruebecita.xml\")//table_data/row/field[@name=\"gene_id\"]\n" +
+			consulta = "for $x in doc(\"/db/bdb_cisa_3.xml\")//table_data/row/field[@name=\"gene_id\"]\n" +
 					"return $x/../field[@name=\"biotype\"]";
 			consultaGestor.put(consulta, gestor);
 		}
