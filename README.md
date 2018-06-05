@@ -9,7 +9,7 @@
 - Consultas ***MairaDB***: Tener funcionando MairaDB y tener introducidas la base de datos bdb_cica, bdb_cisa, bdb_sica y bdb_sisa
 - Consultas ***eXistDB***: Tener funcionando PostgresQL y tener introducidas la base de datos bdb_cica, bdb_cisa, bdb_sica y bdb_sisa
 
-#### Ubuntu
+#### Ubuntu y MAC
 
 
 Vamos a la carpeta donde tenemos la aplicación:
