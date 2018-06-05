@@ -2,11 +2,10 @@
 
 ## Tareas que quedan pendientes:
 
-  - Arreglar los problemas con los drivers de MongoDB y XML.
-  - Tratar de incorporar Docker para poder usar MySQL
-  - Documentar todo el proceso (Latex)
+  - Arreglar los problemas con los drivers de MongoDB.
+  - Documentar todo el proceso (Latex) MYSQL to DOCKER, Conclusiones, Tiempos MongoDB, Codigo HTML y JavaScript
   - Pensar presentación
-  - Comprobar las BD para todos los gestores y asegurarse de que estén bien
+  - Añadir columna DB
   
   
   Para modificar el archivo generado, entraremos dentro de la carteta de *Documentacion formato TFG/ 1. Plantilla*. El archivo de latex del formato TFG será el documento A0MiProyectoFinDeCarrera.tex. 
