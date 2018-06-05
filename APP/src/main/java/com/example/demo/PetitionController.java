@@ -33,7 +33,7 @@ public class PetitionController {
 
 	@RequestMapping(value="/api/hi", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Float> getFoosBySimplePath1(@RequestBody String body) throws JSONException {
+	public List<?> getFoosBySimplePath1(@RequestBody String body) throws JSONException {
 
 	JSONArray jsonarray = new JSONArray(body);
 
@@ -143,7 +143,7 @@ public class PetitionController {
 	
 		
 
-	List<Float> tiemposConsulta = new ArrayList<Float>();
+	List<Object> tiemposConsulta = new ArrayList<Object>();
 	
 	for(Entry<String, String> entry: consultaGestor.entrySet()) {
 
@@ -157,18 +157,31 @@ public class PetitionController {
         }
         else if (entry.getValue().equals("mariadb")) {
             ConnectionMariaDB cnn_mdb = new ConnectionMariaDB();
-            tiemposConsulta.addAll(cnn_mdb.HacerConsulta(entry.getKey()));
-            System.out.println("Case mariadb" + entry.getValue() + "\n");
+			List<Float> cnn = new ArrayList<>();
+			cnn.addAll(cnn_mdb.HacerConsulta(entry.getKey()));
+			String petit = "\nBDB_CICA: "  + cnn.get(0)+  "\nBDB_CISA: "+ cnn.get(1) + "\nBDB_SICA: "+cnn.get(2)
+						+ "\nBDB_SISA: "+ cnn.get(3);
+			tiemposConsulta.add(petit);
+			System.out.println("Case mariadb" + entry.getValue()+"\n"+ petit + "\n");
+
         }
         else if (entry.getValue().equals("psql")){
 		    ConnectionPostgree cnn_ps = new ConnectionPostgree();
-		    tiemposConsulta.addAll(cnn_ps.HacerConsulta(entry.getKey()));
-		    System.out.println("case psql : "+ entry.getValue() + "\n");
+			List<Float> cnn = new ArrayList<>();
+			cnn.addAll(cnn_ps.HacerConsulta(entry.getKey()));
+			String petit = "\nBDB_CICA: "  + cnn.get(0)+  "\nBDB_CISA: "+ cnn.get(1) + "\nBDB_SICA: "+cnn.get(2)
+					+ "\nBDB_SISA: "+ cnn.get(3);
+			tiemposConsulta.add(petit);
+		    System.out.println("case psql : "+ entry.getValue()+ petit + "\n");
 		}
 		else if (entry.getValue().equals("mysql")){
 		    ConnectionMysql cnn_mys = new ConnectionMysql();
-		    tiemposConsulta.addAll(cnn_mys.HacerConsulta(entry.getKey()));
-		    System.out.println("case mysql: " + entry.getValue() + "\n");
+			List<Float> cnn = new ArrayList<>();
+		    cnn.addAll(cnn_mys.HacerConsulta(entry.getKey()));
+			String petit = "\n BDB_CICA: "  + cnn.get(0)+  "\n BDB_CISA: "+ cnn.get(1) + "\n BDB_SICA: "+cnn.get(2)
+					+ "\n BDB_SISA: "+ cnn.get(3);
+			tiemposConsulta.add(petit);
+		    System.out.println("case mysql: " + entry.getValue()+ petit + "\n");
 		}
 		else if (entry.getValue().equals("XML")){
 			ConnectionXML cnn_xml = new ConnectionXML();
