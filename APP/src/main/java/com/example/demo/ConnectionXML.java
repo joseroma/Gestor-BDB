@@ -1,15 +1,20 @@
 package com.example.demo;
-import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+
+import org.exist.xmldb.EXistXQueryService;
+import org.exist.xmldb.XmldbURI;
+import org.xmldb.api.DatabaseManager;
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.CompiledExpression;
+import org.xmldb.api.base.Database;
+import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
+
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.sql.*;
+
+import javax.xml.transform.OutputKeys;
 
 public class ConnectionXML {
 
@@ -17,47 +22,47 @@ public class ConnectionXML {
     String connectionString =  "xmldb:exist://localhost:9080/exist/xmlrpc" ;
 
     //Inicializamos los parámetros necesarios
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet result = null;
+    private  ResourceSet result;
     String selectSql="";
     List<Float> tiempos = new ArrayList<Float>();
     public List<Float> HacerConsulta(String consulta) {
 
         try {
             //Iniciamos el driver
-            Class.forName("org.exist.xmldb.DatabaseImpl");
+            Class<?> cl = Class.forName("org.exist.xmldb.DatabaseImpl");
             //Abrimos la conexión
-            connection = DriverManager.getConnection(connectionString);
-            //Crea un objeto SQLServerStatement para enviar instrucciones SQL a la base de datos.
-            statement = connection.createStatement();
+            Database database = (Database) cl.newInstance();
+            database.setProperty("create-database", "true");
+            DatabaseManager.registerDatabase(database);
+
+            System.out.println(consulta);
+
+
+            // get root-collection
+            Collection col =
+                    DatabaseManager.getCollection(connectionString + XmldbURI.ROOT_COLLECTION, "admin", "name");
+            // get query-service
+            EXistXQueryService service =
+                    (EXistXQueryService) col.getService("XQueryService", "1.0");
+
+            // set pretty-printing on
+            service.setProperty(OutputKeys.INDENT, "yes");
+            service.setProperty(OutputKeys.ENCODING, "UTF-8");
+
+            CompiledExpression compiled = service.compile(consulta);
             //Guardamos la consulta que queremos en una variable
             long start = System.currentTimeMillis();
             Thread.sleep(2000);
-            selectSql = consulta;
-            //Ejecuta la instrucción SQL especificada y devuelve una sola SQLServerResultSet objeto.
-            result = statement.executeQuery(selectSql);
-            while (result.next())  {}
-            long elapsedTimeMillis = System.currentTimeMillis() - start;
-            float elapsedTimeSec = elapsedTimeMillis/1000F;
-            tiempos.add(elapsedTimeSec);
+            result = service.execute(compiled);
 
-        } catch (Exception e) {
+            long elapsedTimeMillis = System.currentTimeMillis() - start;
+            float elapsedTimeSec = elapsedTimeMillis / 1000F;
+            tiempos.add(elapsedTimeSec);
+        } catch ( Exception e ) {
             e.printStackTrace();
-        } finally {
-            if (result != null) try {
-                result.close();
-            } catch (Exception e) {
-            }
-            if (statement != null) try {
-                statement.close();
-            } catch (Exception e) {
-            }
-            if (connection != null) try {
-                connection.close();
-            } catch (Exception e) {
-            }
         }
+
+
         return tiempos;
     }
 }

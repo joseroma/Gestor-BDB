@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ConnectionMysql {
 	
-	String connectionString = "jdbc:mysql://localhost:3306/bdb_cica?user=root&password=MyNewPass&autoReconnect=true&useSSL=false" ;
+	String connectionString = "jdbc:mysql://localhost:3307/bdb_cica?user=root&password=name&autoReconnect=true&useSSL=false" ;
     
 	 Connection connection = null;
 	    Statement statement = null;   
