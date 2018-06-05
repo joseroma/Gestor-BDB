@@ -14,7 +14,7 @@ import java.sql.*;
 public class ConnectionPostgree {
 
     //Definimos la URL con la que vamos a trabajar
-    String connectionString = "jdbc:postgresql://localhost:5432/bdb_sica?user=postgres&password=name&autoReconnect=true&useSSL=false" ;
+    String connectionString = "jdbc:postgresql://localhost:5432/bdb_sisa?user=postgres&password=name&autoReconnect=true&useSSL=false" ;
 
     //Inicializamos los parámetros necesarios
     Connection connection = null;

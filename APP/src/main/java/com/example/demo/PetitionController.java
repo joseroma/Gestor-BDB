@@ -92,7 +92,7 @@ public class PetitionController {
 	    String from="";
 	    for(int f=0; f<num_tab; f++) {
 	    	if(f==num_tab-1) from = from + listTab.get(f);
-	    	else select = from = from + listTab.get(f) + ", ";
+	    	else from = from + listTab.get(f) + ", ";
 	    }
 	    
 	    //Lista condiciones
@@ -115,9 +115,21 @@ public class PetitionController {
 		//Consulta xml
 
 		else if(gestor.equals("XML")) {
+			String consulta4 = "for $x in doc(\"/db/pruebecita.xml\")//\n" +
+					"     table_data/row/field[@name=\"transcript_id\"]\n" +
+					"     where data($x)=\"862540\"\n" +
+					"     return $x/.";
+			String consulta3 = "for $x in doc(\"/db/pruebecita.xml\")//\n" +
+					"table_data/row/field[@name=\"gene_id\"]\n" +
+					"return $x/../field[@name=\"biotype\"]";
+			String consulta2 = "for $x in doc(\"/db/pruebecita.xml\")//\n" +
+					"table_data/row/field[@name=\"transcript_id\"]\n" +
+					"return $x/..";
+			String consulta1 = "for $x in doc(\"/db/pruebecita.xml\")//table_data/row/field[@name=\"transcript_id\"]\n where data($x)=\"862540\"" +
+			"return $x/../field[@name=\"gene_id\"]";
 			consulta = "for $x in doc(\"/db/pruebecita.xml\")//table_data/row/field[@name=\"gene_id\"]\n" +
 					"return $x/../field[@name=\"biotype\"]";
-			consultaGestor.put(consulta, gestor);
+			consultaGestor.put(consulta4, gestor);
 		}
 	    //Consulta relacional
 	    else {
@@ -161,7 +173,7 @@ public class PetitionController {
 		else if (entry.getValue().equals("XML")){
 			ConnectionXML cnn_xml = new ConnectionXML();
 			tiemposConsulta.addAll(cnn_xml.HacerConsulta(entry.getKey()));
-			System.out.println("case mysql: " + entry.getValue() + "\n");
+			System.out.println("case XML: " + entry.getValue() + "\n");
 		}
 
 
@@ -171,12 +183,12 @@ public class PetitionController {
 		}
 		
 		
-		//MANDAR TIEMPOS A INTERFAZ
+
 	}
 	
 	
 	
-	return tiemposConsulta; //DEVUELVO NOSQL?? TIEMPO??
+	return tiemposConsulta;
 
 
 	}

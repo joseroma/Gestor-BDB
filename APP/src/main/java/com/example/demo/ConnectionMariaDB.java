@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ConnectionMariaDB {
 	
-		String connectionString = "jdbc:mysql://localhost:3306/bdb_sisa?user=root&password=name&autoReconnect=true&useSSL=false" ;
+		String connectionString = "jdbc:mysql://localhost:3306/bdb_sica?user=root&password=name&autoReconnect=true&useSSL=false" ;
 		 Connection connection = null;
 		    Statement statement = null;   
 		    ResultSet result = null;  

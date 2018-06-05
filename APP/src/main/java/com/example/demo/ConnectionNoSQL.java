@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,21 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.sql.*;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
-import com.mongodb.WriteConcern;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.DBCursor;
-import com.mongodb.ServerAddress;
+
+
+import java.util.Arrays;
 
 public class ConnectionNoSQL {
 
-	
 	//Definimos la URL con la que vamos a trabajar
 	String connectionString = "jdbc:mongo://localhost:27017/bdb_sica?user=root&password=name&autoReconnect=true&useSSL=false";
 

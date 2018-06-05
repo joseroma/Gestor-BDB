@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ConectionDatabase {
     public static void main(String[] args) {
-        String connectionString = "jdbc:mysql://localhost:3307/bdb_sisa?user=root&password=name&autoReconnect=true&useSSL=false";
+        String connectionString = "jdbc:mysql://localhost:3307/bdb_cisa?user=root&password=name&autoReconnect=true&useSSL=false";
 
         Connection connection = null;
         Statement statement = null;
