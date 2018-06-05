@@ -9,6 +9,8 @@
 - Consultas ***MairaDB***: Tener funcionando MairaDB y tener introducidas la base de datos bdb_cica, bdb_cisa, bdb_sica y bdb_sisa
 - Consultas ***eXistDB***: Tener funcionando PostgresQL y tener introducidas la base de datos bdb_cica, bdb_cisa, bdb_sica y bdb_sisa
 
+#### Ubuntu
+
 
 Vamos a la carpeta donde tenemos la aplicación:
 
@@ -19,13 +21,13 @@ Vamos a la carpeta donde tenemos la aplicación:
 Instalamos las dependencias de Maven
 
 
-```mvn clean install```
+```sudo mvn clean install```
 
 
 Corremos la aplicación
 
 
-```mvn spring-boot:run```
+```sudo mvn spring-boot:run```
 
 
 ## Tareas que quedan pendientes:
