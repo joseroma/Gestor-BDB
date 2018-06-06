@@ -1,5 +1,5 @@
 # Gestor-BDB
-## ¿Cómo correr la aplicación?
+## ¿Cómo ejecutar la aplicación?
 ### Requisitos:
 
 
