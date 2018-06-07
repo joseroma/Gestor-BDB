@@ -507,7 +507,7 @@ Lo haremos usando $FireZilla$  con la dirección
 Procedimiento para cada gestor:
 
 %mariadb
-\subsubsection{MariaDB:} \label{pto211}
+\subsubsection{MariaDB} \label{pto211}
 
 MariaDB es un sistema de gestión de bases de datos derivado de $MySQL$ don licencia GPL (General Public License). Es desarrollado por Michael (Monty) Widenius (fundador de $MySQL$), la fundación $MariaDB$ y la comunidad de desarrolladores de software libre. Tiene una alta compatibilidad con $MySQL$ ya que posee las mismas órdenes, interfaces, APIs y bibliotecas, siendo su objetivo poder cambiar un servidor por otro directamente.
 
@@ -614,7 +614,7 @@ Para ello usaremos la clase en $Java$ que se crea la conexión con el gestor y l
 
 \newpage
 %mysql
-\subsubsection{MySQL:} \label{pto212}
+\subsubsection{MySQL} \label{pto212}
 Se usan los mismos comandos que para $MariaDB:$
 
 \begin{verbatim}
@@ -629,7 +629,7 @@ mysqlimport -u root -p --fields-terminated-by='\t'
 \end{verbatim}
 
 %postgree
-\subsubsection{PSQL:} \label{pto213}
+\subsubsection{PSQL} \label{pto213}
 
 Priemero crearemos la base de datos en otro gestor (MariaDB) y luego las exportaremos a $Postgres$.
 
@@ -1096,10 +1096,16 @@ En $collections$ podemos seleccionar el script .xml creado y subirlo a $eXistDB$
 \end{enumerate}
 
 %exitdb
-\subsubsection{ExitDB} Como gestor de bases de datos. \label{pto412}
+\subsubsection{ExitDB} Como gestor de la base de datos. \label{pto412}
+
+Es un gestor de base de datos que se puede utilizar sobre bases de datos no relacionales y bases de datos en XML. En nuestro caso, lo utilizaremos para cargar una base de datos en XML. Los problemas principales que hemos encontrado al utilizar este gestor de base de datos a diferencia del resto es que no soporta bases de datos en XML mayores de 4 GB.\\
+
+Soporta tanto XML, como JSON y HTML.
 
 %xquery
 \subsubsection{XQuery} Para realizar las consultas a la base de datos. \label{pto413}
+
+A diferencia del resto de gestores de bases de datos eXistDB proporciona su propia forma para realizar las cosultas a las bases de datos, XQuery. No lo hemos probado para otro tipo de bases de datos, pero para el caso de XML, nos hemos visto obligado a reducir el tamaño de las bases de datos a tamaños inferiores a 10 Mb para poder realizar consultas a través de XQuery.
 
 
 \newpage
@@ -1292,7 +1298,7 @@ return $x/../field[@name="biotype"]
 
 \subsection{Conclusión gestor XML}  \label{pto43}
 
-\subsubsection{Tiempos:}  \label{pto431}
+\subsubsection{Tiempos}  \label{pto431}
 
 \begin{itemize}
 \item 
@@ -1363,6 +1369,9 @@ Tras estas diferencias, hay otros factores que pueden influir en la decisión de
 
 %----------------------------------------------------------------------------------------
 \newpage
+\mbox{}
+\newpage
+
 
 \section{Tecnologías utilizadas en SGBD no relacionales y diseño de consultas} \label{pto5} 
 
@@ -1648,6 +1657,9 @@ Analizamos las ventajas y desventajas de una base de datos NoSQL:\\
 
 %----------------------------------------------------------------------------------------
 \newpage
+\mbox{}
+\newpage
+
 \section{Interfaz gráfica} \label{pto7}
 
 Nuestra interfaz ha sido desarrollada en AngularJS, un framework de JavaScript. Es una aplicaciones web de una sola página. Sigue el Modelo Vista Controlador (MVC).
@@ -1673,6 +1685,8 @@ $HTML$ nos ha servido para generar la estructura visible de nuestra página web.
 %DISEÑO INTERFAZ	
 
 \newpage
+
+
 \subsection{Diseño interfaz} \label{pto72}
 
 
@@ -1714,6 +1728,9 @@ El código de la implementación de la interfaz está adjuntado dentro del proye
 %8. INTEGRACION
 %----------------------------------------------------------------------------------------
 \newpage
+\mbox{}
+\newpage
+
 \section{Integración Back-end Front-end} \label{pto8}
 
 Hasta este momento solo teníamos una interfaz cuyos datos no llegaban a ningún sitio, y un $back-end$ donde había que meter los datos a mano, y estos tampoco eran devueltos más que a la pantalla de la consola.
@@ -1882,6 +1899,9 @@ Como resultado ya podremos ejecutar nuestro servidor en la dirección
 %10. Conclusiones
 %----------------------------------------------------------------------------------------
 \newpage
+\mbox{}
+\newpage
+
 \section{Conclusiones} \label{pto9}
 
 
@@ -1891,6 +1911,9 @@ Como resultado ya podremos ejecutar nuestro servidor en la dirección
 %11. Bibliografía
 %----------------------------------------------------------------------------------------
 \newpage
+\mbox{}
+\newpage
+
 \section{GitHub} \label{pto10}
 \url{https://github.com/nairachiclana/Gestor-BDB}
 \section{Webgrafía} \label{pto11}
