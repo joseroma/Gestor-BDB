@@ -38,5 +38,8 @@ Corremos la aplicación
   - Añadir columna DB
   - Acabar de incluir resto de contenedores en Docker (If necessary).  
   - Incluir contenedores de Docker y que al inicial la app se inicien los contenedores.
+  - Quitar a la interfaz el boton de editar.
+  - Añadir a la DB el gestor utilizado
+  - Ampliar un poco la columna de los tiempos.
  
 
