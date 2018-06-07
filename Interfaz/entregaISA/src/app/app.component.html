@@ -21,16 +21,14 @@
   </nav>
 <!--Empieza la pestaña de HOME-->
     <div id ="home" class="tabcontent">
-        <h1 style="text-align: center"><b>Encuentra como hacer la mejor petición</b></h1>
-        <div class="row col-sm-20" style="padding-left: 20%">
-        <p class="col-sm-10" >El objetivo de este servicio es el de crear una lista de peticiones sobre diferentes bases de datos.
-          Y permite poder mandarlas todas y comprobar los diferentes tiempos que tardan en hacerse las peticiones. De esta forma
-          podemos saber cual es la mejor forma de hacer una petición para hacer que las búsquedas tarden el menor tiempo posible.
+        <h1 style="text-align: center; padding-top: 8%"><b><font size=7>Aplicación gestora de Base de Datos</font></b></h1>
+        <div class="row col-sm-20" style="padding-left: 20%; padding-top: 5%">
+        <p class="col-sm-10" ><font size=5> Este servicio proporciona los tiempos de ejecución de una serie de consultas con el objetivo de averiguar qué gestor y versión es el mejor para la consulta dada.</font>
         </p>
       </div>
 
-      <div style="padding-left: 50% ">
-            <button type="button" class=" btn btn-primary" (click)="openCity(event, 'Buscador')">Buscador</button>
+      <div style="padding-left: 35%; padding-top: 5%">
+            <button type="button" class=" btn btn-primary btn-lg btn-block col-sm-6" (click)="openCity(event, 'Buscador')">Buscador</button>
       </div>
         
     </div>
@@ -204,6 +202,7 @@
             <th>Numero de condiciones</th>
             <th>Condiciones</th>
             <th> Group by</th>
+            <th>Base de Datos</th>
             <div [hidden]="mostrarResul">
               <th>Tiempos</th>
             </div> 
@@ -218,12 +217,12 @@
                  <td>{{petit.condNum}}</td>
                  <td>{{petit.cond1}} {{petit.cond2}} {{petit.cond3}} {{petit.cond4}} {{petit.cond5}} {{petit.cond6}}</td>
                  <td>{{petit.groupBy}}</td> 
+                 <td>{{petit.bd}}</td>
                  <div [hidden]="mostrarResul">
-                 <td style="width: 30px;">{{tiempos[i]}}</td> 
+                 <td style="width: 40px;">{{tiempos[i]}}</td> 
                  </div>
                  <td>
                   <div class="btn-group">
-                     <a (click)="editPetition(i)" class="btn btn-light"> Editar </a>
                      <a (click)="deletePetition(i)" class="btn btn-danger"> Borrar  </a>
                   </div>
                 </td>
