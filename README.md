@@ -32,14 +32,11 @@ Corremos la aplicación
 
 ## Tareas que quedan pendientes:
 
+  - Empezar capítulos en pags impares
+  - Arreglar cod xml
+  - Webgrafía con refs
   - Arreglar los problemas con los drivers de MongoDB.
-  - Documentar todo el proceso (Latex) MYSQL to DOCKER, Conclusiones, Tiempos MongoDB, Codigo HTML y JavaScript
-  - Pensar presentación
-  - Añadir columna DB
-  - Acabar de incluir resto de contenedores en Docker (If necessary).  
-  - Incluir contenedores de Docker y que al inicial la app se inicien los contenedores.
-  - Quitar a la interfaz el boton de editar.
-  - Añadir a la DB el gestor utilizado
-  - Ampliar un poco la columna de los tiempos.
+  - Documentar todo el proceso (Latex) MYSQL to DOCKER, Tiempos MongoDB, Codigo HTML y JavaScript
+  - Conclusión final
  
 
