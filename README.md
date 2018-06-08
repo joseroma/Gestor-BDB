@@ -34,9 +34,8 @@ Corremos la aplicación
 
   - Empezar capítulos en pags impares
   - Arreglar cod xml
-  - Webgrafía con refs
+  - Webgrafía con refs --> No le compila  a Paloma
   - Arreglar los problemas con los drivers de MongoDB.
   - Documentar todo el proceso (Latex) MYSQL to DOCKER, Tiempos MongoDB, Codigo HTML y JavaScript
-  - Conclusión final
  
 
