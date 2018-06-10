@@ -28,14 +28,4 @@ Corremos la aplicación
 
 
 ```sudo mvn spring-boot:run```
-
-
-## Tareas que quedan pendientes:
-
-  - Empezar capítulos en pags impares
-  - Arreglar cod xml
-  - Webgrafía con refs --> No le compila  a Paloma
-  - Arreglar los problemas con los drivers de MongoDB.
-  - Documentar todo el proceso (Latex) Tiempos MongoDB, Codigo HTML y JavaScript
  
-
