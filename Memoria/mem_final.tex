@@ -1,0 +1,2259 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{enumitem}
+\usepackage[spanish]{}
+\usepackage{hyperref}
+
+
+
+%%%%------------------------METER CÓDIGO-----------------
+
+%% OPCIONES
+\setlength{\parindent}{0pt}
+% Turn on the style
+\pagestyle{fancy}
+% Clear the header and footer
+\fancyhf{}
+% Set the right side of the footer to be the page number
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt} % remove the header rule
+
+%% TÍTULO
+
+
+
+\usepackage{listingsutf8}
+\usepackage[x11names, rgb, html]{xcolor}
+
+
+%% Colores
+
+\definecolor{50}{HTML}{AC58FA}
+\definecolor{100}{HTML}{848484}
+\definecolor{200}{HTML}{EF9A9A}
+\definecolor{300}{HTML}{6E6E6E}
+\definecolor{400}{HTML}{EF5350}
+\definecolor{500}{HTML}{0040FF}
+\definecolor{600}{HTML}{E53935}
+\definecolor{700}{HTML}{8A0886}
+\definecolor{800}{HTML}{C62828}
+\definecolor{900}{HTML}{B71C1C}
+\definecolor{sbase00}{HTML}{000000}
+
+%% Tildes
+
+\lstset{
+  inputencoding=utf8/latin1
+}
+
+%% Opciones
+
+\lstset{
+  % How/what to match
+   sensitive=false,
+  % Border (above and below)
+  frame=leftline,
+  rulecolor=\color{300},
+  framerule=2pt,
+  % Line number
+ % numbers=left,
+  % Extra margin on line (align with paragraph)
+  xleftmargin=  % Put extra space under caption
+  belowcaptionskip=1\baselineskip,
+  % Colors
+  % backgroundcolor=\color{sbase3},
+  basicstyle=\small\ttfamily\color{sbase00},
+  keywordstyle=\color{700},
+  commentstyle=\color{100},
+  stringstyle=\color{500},
+  numberstyle=\color{50},
+ % identifierstyle=\color{500},
+  % Break long lines into multiple lines?
+  breaklines=true,
+  % Show a character for spaces?
+  showstringspaces=false,
+  tabsize=2,
+  xleftmargin=0.7em,
+}
+
+\renewcommand{\lstlistingname}{Código fuente}% Listing -> Algorithm
+
+
+
+%----------------EMPIEZA
+
+
+\begin{document}
+
+%------------------------------------------------
+% PORTADA
+%------------------------------------------------
+
+\begin{center}
+UNIVERSIDAD DE MÁLAGA
+
+\vspace{1em}
+
+ESCUELA TÉCNICA SUPERIOR DE INGENIERÍA INFORMÁTICA
+
+\includegraphics[width=37em]{img/logo}
+
+\vspace{3em}
+
+\textbf{APLICACIÓN GESTORA DE BASES DE DATOS}
+
+
+\vspace{7em}
+
+GRADO EN INGENIERÍA DE LA SALUD
+
+\vspace{1em}
+
+MÁLAGA, 2018
+
+\newpage
+
+\vspace{15em}
+
+Proyecto Bases de Datos Biológicas
+
+Ingeniería de la Salud
+
+\vspace{3em}
+
+\textbf{Formato de Publicación de la Escuela Técnica Superior de Ingeniería Informática de Málaga}
+
+\vspace{3em}
+
+Autores:\\
+
+\vspace{1em}
+
+José Rodríguez Maldonado\\
+
+Paloma Domínguez Sánchez\\
+
+Naira Chiclana García  
+
+
+\end{center}
+%------------------------------------------------
+% RESUMEN
+%------------------------------------------------
+\newpage
+\section*{Resumen}
+
+
+En este documento se trata un proyecto de la asignatura de Bases de Datos Biológicas que realizaron alumnos del grado de Ingeniería de la Salud de la Escuela Técnica Superior de Ingeniería Informática de Málaga.\\
+
+En él se explican los procedimientos seguidos para la creación de bases de datos relacionales, en XML y No relaciones usando los gestores correspondiente a dichas bases. Además se comparan los tiempo de ejecución de diferentes consultas en los diferentes gestores y versiones de la bases.\\
+
+Se incluye además los pasos seguidos para la realización de una interfaz gráfica que gestione estas consultas.
+
+
+
+
+%------------------------------------------------
+% INDICE CONTENIDOS
+%------------------------------------------------
+\newpage
+\section*{Indice de contenidos}
+
+
+\begin{enumerate}
+\item Introducción \ref{intro}
+	
+	\begin{enumerate}[label*=\arabic*.]
+	\item Contexto \ref{pto11}
+	\item Motivación \ref{pto12}
+	\item Objetivos del proyectos  \ref{pto13}
+	\item Estructura del documento  \ref{pto14}
+	\end{enumerate}
+
+\item Tecnologias utilizadas en SGBD Relacionales y diseño de consultas \ref{pto2}
+	\begin{enumerate}[label*=\arabic*.]
+	\item Tecnologias utilizadas en SGBD Relacionales \ref{pto21}
+		\begin{enumerate}[label*=\arabic*.]
+		\item MariaDB \ref{pto211}
+		\item MySQL \ref{pto212}
+		\item Postgree \ref{pto212}
+		\end{enumerate}
+	\item Diseño de consultas \ref{pto22}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Consultas simples \ref{pto221}
+		\item Consultas avanzadas \ref{pto222}
+		\end{enumerate}
+	\end{enumerate}
+	
+	
+\item Versiones optimizadas \ref{pto3}
+	\begin{enumerate}[label*=\arabic*.]
+	\item Motores de búsqueda \ref{pto31}
+		\begin{enumerate}[label*=\arabic*.]
+		\item MyISAM \ref{pto311}
+		\item InnoDB \ref{pto312}
+		\end{enumerate}
+	\item Índices \ref{pto32}
+	\item Conclusión de los gestores relacionales \ref{pto33}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Evaluación de tiempo\ref{pto331}
+		\end{enumerate}
+	\end{enumerate}
+
+	 
+\item Tecnologías utilizadas en SGBD XML y diseño de consultas \ref{pto4}
+	\begin{enumerate}[label*=\arabic*.]
+	\item Tecnologias utilizadas en SGBD XML \ref{pto41}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Docker \ref{pto411}
+		\item ExitDB \ref{pto412}
+		\item XQuery \ref{pto413}
+		\end{enumerate}
+	
+	\item Diseño de consultas XML-XQuery \ref{pto42}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Reducción db en XML \ref{pto421}
+		\item Creación de consultas para db reducida \ref{pto422}
+		\end{enumerate}
+
+	\item Conclusión gestor XML \ref{pto43}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Tiempos consultas \ref{pto431}
+		\end{enumerate}
+	\end{enumerate}
+	
+\item  Tecnologías utilizadas en SGBD no relacioneles y diseño de consultas NOSQL \ref{pto5}
+	\begin{enumerate}[label*=\arabic*.]
+	\item Tecnologias utilizadas en SGBD no relacionales \ref{pto51}
+		\begin{enumerate}[label*=\arabic*.]
+		\item MongoDB \ref{pto511}
+		\item JSON \ref{pto512}
+		\item JavaScript \ref{pto513}
+		\end{enumerate}
+	\item Diseño de consultas NoSQL \ref{pto52}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Migración de datos a MongoDB \ref{pto521}
+		\item Consultas para MongoDB a traves de JavaScript \ref{pto522}
+		\end{enumerate}
+	\item Conclusión gestor NoSQL \ref{pto53}
+	\end{enumerate}
+
+
+\item Clases Java \ref{pto6}
+	\begin{enumerate}[label*=\arabic*.]
+	\item Conexión con Bases de datos \ref{pto61}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Connection Postgree \ref{pto611}
+		\item Connection MariaDB \ref{pto612}
+		\item Connection MySQL \ref{pto613}
+		\item Connection XML \ref{pto614}
+		\item Connection MongoDB \ref{pto615}
+		\end{enumerate}
+	\item Conexión BD-Interfaz\ref{pto62}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Petition Controller \ref{pto621}
+		\end{enumerate}
+	\end{enumerate}
+
+\item Implementación de la interfaz gráfica  \ref{pto7}
+		\begin{enumerate}[label*=\arabic*.]
+		\item Tecnologías usadas \ref{pto71}
+			\begin{enumerate}[label*=\arabic*.]
+			\item Angular JS \ref{pto711}
+			\item JavaScript \ref{pto712}
+			\item HTML \ref{pto713}
+			\item CSS \ref{pto714}
+			\end{enumerate}
+		\item Diseño interfaz \ref{pto72}
+			
+		\end{enumerate}
+
+\item Integración Back-end Front-end \ref{pto8}
+	\begin{enumerate}[label*=\arabic*.]
+	\item Tecnologías usadas \ref{pto81}
+		\begin{enumerate}[label*=\arabic*.]
+			\item Spring-Boot \ref{pto811}
+			\item Spring Tool Suite\ref{pto812}
+			\item Java \ref{pto813}
+			\item Maven \ref{pto814}
+		\end{enumerate}
+	\item Proceso integración \ref{pto82}
+	\end{enumerate}
+
+
+
+\item Conclusiones y trabajos futuros  \ref{pto9}
+
+	\begin{enumerate}[label*=\arabic*.]
+			\item Conclusiones \ref{pto91}
+			\item Trabajos futuros\ref{pto92}
+		\end{enumerate}
+		
+\item GitHub \ref{pto10}
+\item Webgrafía \ref{pto11} 
+\end{enumerate}
+
+%------------------------------------------------
+% INDICE ILUSTRACIONES
+%------------------------------------------------
+\newpage
+\section*{Indice de ilustraciones}
+
+
+
+Figura 1:  homo\_sapiens\_core en Firezilla \ref{fig1:fire}
+
+Figura 2: Relaciones entre tablas de homo\_sapiens\_core \ref{fig2:rel}
+
+Figura 3: 4 versiones de la base de datos  \ref{fig3}
+
+Figura 4: Interfaz ExistDB en contenedor Docker \ref{interfazxdb}
+
+Figura 5: Estructura en arbol de los datos introducidos en XML \ref{exit0}
+
+Figura 6: Introducción de bd en eXistDB \ref{exit1}
+
+Figura 7: Consulta XML 1 \ref{xml1}
+
+Figura 8: Consulta XML 2 \ref{xml2}
+
+Figura 9: Consulta XML 3 \ref{xml3}
+
+Figura 10: Consulta XML 4 \ref{xml4}
+
+Figura 11: Consulta XML 5 \ref{xml5}
+
+Figura 12: Consulta 1 MongoDB \ref{mongo1}
+
+Figura 13: Consulta 2 MongoDB \ref{mongo2}
+
+Figura 14: Consulta 3 MongoDB \ref{mongo3}
+
+Figura 15: Primer prototipo interfaz \ref{int1}
+
+Figura 16: Prototipo final interfaz \ref{int2}
+
+Figura 17: Tiempos devueltos por interfaz para las 4 BD \ref{int3}
+
+Figura 18: Importación Angular \ref{itg1}
+
+Figura 19: Estructura de carpetas con spring-boot \ref{itg2}
+
+Figura 20: Eliminar node modules \ref{itg3}
+
+Figura 21: Primera prueba de integración \ref{itg4}
+
+Figura 22: Diagrama acceso a códigos en repositorio Github \ref{git0}
+
+Figura 23: Total commits hechos a repositorio  \ref{git1}
+
+Figura 24: Total additions hechos a repositorio \ref{git2}
+
+Figura 25: Total deletions hechos a repositorio \ref{git3}
+
+Cuadro 1: tiempos de gestores relacionales \ref{tiempos}
+	
+
+
+
+%-------------------------------------------------------------------------------------------------
+
+% 1. INTRODUCCIÓN
+
+%----------------------------------------------------------------------------------------
+
+\newpage
+\section{Introducción: Definición inicial del proyecto} \label{intro}
+
+En este capítulo se va a proporcionar al lector una visión general sobre el proyecto desarrollado. Para ello se ha dividido en los siguientes apartados: Contexto, motivación, objetivos establecidos y  estructura de la memoria.
+%CONTEXTO
+\subsection{Contexto} \label{pto11}
+El proyecto desarrollado se encuentra en el campo de las Bases de Datos y sus gestores. Vamos a comenzar con una explicación del concepto y algunas de sus posibles aplicaciones.\\
+
+Una base de datos es un conjunto de datos pertenecientes a un mismo contexto y almacenados sistemáticamente para su posterior uso \cite{BDRelacional}. En este sentido; una biblioteca puede considerarse una base de datos compuesta en su mayoría por documentos y textos impresos en papel e indexados para su consulta. Actualmente, y debido al desarrollo tecnológico de campos como la informática y la electrónica, la mayoría de las bases de datos están en formato digital, siendo este un componente electrónico, por tanto se ha desarrollado y se ofrece un amplio rango de soluciones al problema del almacenamiento de datos.
+Existen programas denominados sistemas gestores de bases de datos, abreviado $SGBD$ (del inglés Database Management System o DBMS), que \textbf{administran y gestionan la información que contiene una base de datos}.
+ A través de él se maneja todo acceso a la base de datos con el objetivo de servir de interfaz entre ésta, el usuario y las aplicaciones. Las propiedades de estos SGBD, así como su utilización y administración, se estudian dentro del ámbito de la informática.\\
+
+En cuanto a las posibles aplicaciones de los $SGBD$, podemos encontrar la gestión de empresas e instituciones públicas; pero también, y más en el campo que nos concierne, son ampliamente utilizadas en entornos científicos con el objeto de almacenar la información experimental.\\
+
+Existen diferentes modelos de gestores de bases de datos, en este documento se tratan principalmente bases de datos \textbf{relacionales}, aunque también se hace uso de un modelo $XML$ y \textbf{No Relacional.}\\
+
+Las Bases de Datos Relacionales son utilizadas en la actualidad para representar problemas reales y administrar datos dinámicamente. Tras ser postulados sus fundamentos en 1970 por Edgar Frank Codd, de los laboratorios IBM en San José (California), no tardó en consolidarse como un nuevo paradigma en los modelos de base de datos. Su idea fundamental es el uso de "relaciones". Estas relaciones podrían considerarse en forma lógica como conjuntos de datos llamados $"tuplas"$. La información puede ser recuperada o almacenada mediante "consultas" que ofrecen una amplia flexibilidad y poder para administrar la información.\\
+\newpage
+El lenguaje más habitual para construir las consultas a bases de datos relacionales es \textbf{SQL} \textit{Structured Query Language} o Lenguaje Estructurado de Consultas, un estándar implementado por los principales motores o sistemas de gestión de bases de datos relacionales.
+
+
+%MOTIVACION
+\subsection{Motivación} \label{pto12}
+
+Como se ha comentado anteriormente, las bases de datos tienen numerosas aplicaciones, pero en este caso se ha optado por el ámbito de las Bases de Datos Biológicas para la definición del proyecto. En este ámbito, las bases de datos son de gran ayuda pues permiten recoger gran cantidad de información ordenada y diferenciada de los numerosos experimentos científicos que tienen lugar a nivel de la Genómica, Transcriptómica y Metabolómica.\\
+
+En los últimos años, debido a la rápida evolución de las técnicas experimentales de alto rendimiento (Secuenciación del ADN, Cristalografía de rayos X, Microarreglo de ADN) se generó un crecimiento exponencial en la cantidad de datos biológicos (secuencias genómicas y de proteínas, estructuras de proteínas, expresión génica, mutaciones, etc) que generaron la necesidad de contar con formas eficientes de almacenar la información.\\
+
+Esta aplicación es muy interesante para todos los grupos de investigación a nivel mundial, pues permiten un uso compartido de la información que ayuda al desarrollo de la investigación de una forma mas eficiente y dinámica.\\
+
+Además de lo comentado, el almacenamiento de estos datos se realiza de manera histórica, por lo que, no solo tenemos en cuenta los datos actuales, sino que podemos realizar comparaciones y estadísticas teniendo en cuenta datos referentes a otros años. Por lo tanto, además de poder realizar análisis más precisos, nos permite evaluar si las decisiones que se tomaron en un determinado momento de la historia fueron oportunas. Así que, también es posible evitar cometer los mismos errores que se pudieron cometer al realizar experimentos en un determinado momento de la historia.\\
+
+Para este propósito es necesario realizar una evaluación de los sistemas de almacenamiento. Este proyecto también comprende este aspecto, ya que el rendimiento, capacidad de almacenamiento y rapidez de consulta son factores determinantes para conseguir la solución óptima.
+
+\newpage
+
+%OBJETIVOS
+\subsection{Objetivos del proyecto} \label{pto13}
+
+El objetivo principal del proyecto es desarrollar una aplicación capaz de analizar, comparar y estudiar la velocidad de consulta de diferentes sistemas de gestión de bases de datos idóneas para una base de datos. En él se hace uso de tres SGBD relacionales: 
+
+\textbf{MariaDB}, \textbf{MySQL} y \textbf{Postgres}, un SGBD $XML$ (\textbf{ExistDB}) y un SGBD no relacional (\textbf{MongoDB}.)\\
+
+Una vez realizada la consulta y el estudio del tiempo requerido de estos sistemas de gestión de bases de datos, se procederá a la elección de uno de ellos, teniendo en cuenta el análisis realizado y el rendimiento obtenido, y se obtendrá la consulta realizada.
+
+%ESTRUCTURA
+\subsection{Estructura del documento} \label{pto14}
+El presente documento se encuentra divido en varios capítulos, recogiendo toda la información relacionada con el desarrollo de este proyecto. A continuación, se ofrece una breve descripción de cada uno de ellos. 
+
+\begin{itemize}
+\item CAPÍTULO 1 – INTRODUCCIÓN. 
+
+En este capítulo se establece el contexto que abarca el desarrollo del proyecto, describiendo su temática, objetivos que se desean alcanzar y las motivaciones que han llevado a su desarrollo. 
+
+\item CAPÍTULO 2 – TECNOLOGÍAS UTILIZADAS EN SGBD RELACIONES Y DISEÑO DE CONSULTAS. 
+
+Durante este capítulo se describen las tecnologías utilizadas en el desarrollo de los sistemas gestores de MariaDB, MySQL y Postgres; así como las características principales de cada una de ellas. Además, se explican las razones por las que se ha decidido el uso de esa tecnología. 
+
+\item CAPÍTULO 3 – VERSIONES OPTIMIZADAS  
+
+Este capítulo describe la metodología seleccionada para optimizar los gestores utilizados en el capítulo anterior.
+
+\item CAPÍTULO 4 – TECNOLOGÍAS UTILIZADAS EN SGBD XML Y DISEÑO DE CONSULTAS. 
+
+Durante este capítulo se describen las tecnologías utilizadas en el desarrollo del sistema gestor ExistDB y las consultas XML
+
+\item  CAPÍTULO 5 – TECNOLOGÍAS UTILIZADAS EN SGBD NO RELACIONALES Y DISEÑO DE CONSULTAS NOSQL
+
+En este capítulo se describen las tecnologías utilizadas en el desarrollo del sistema gestor MongoDB y las consultas NoSQL
+
+\item CAPÍTULO 6 - CLASES JAVA
+
+Todas las clases usadas para conectarse con los gestpres y realizar las consultas.
+
+\item CAPÍTULO 7 – IMPLEMENTACIÓN DE LA INTERFAZ GRÁFICA 
+
+Usada para meter los datos con los que se creará á consulta y visualizar los resultados.
+
+\item CAPÍTULO 8 -INTEGRACIÓN BACK-END FRONT-END
+
+Durante este capítulo se describe la evaluación realizada a los sistemas de almacenamiento, detallando las pruebas de almacenamiento realizadas y explicando los resultados obtenidos.
+
+\item CAPÍTULO 9 – CONCLUSIONES Y TRABAJOS FUTUROS. 
+
+Durante este capítulo se aportaran las conclusiones obtenidas a lo largo del desarrollo del proyecto, teniendo en cuenta los objetivos y el todo el proceso de desarrollo. Además, se describen los conocimientos aprendidos a lo largo del proyecto y algunos aspectos a tener en cuenta en trabajos futuros. 
+
+\item 
+CAPÍTULO 10 – WEBGRAFÍA
+
+Referencias a documentos y webs que se han usado para realizar la redacción de este documento.
+
+\end{itemize}
+
+%-------------------------------------------------------------------------------------------------
+
+% 2. TECNOLODIAS SGBD RELACIONALES + CONSULTAS
+
+%----------------------------------------------------------------------------------------
+
+\newpage
+\section{Tecnologias utilizadas en SGBD Relacionales y diseño de consultas} \label{pto2} 
+
+%------------------------------------------------------------
+% 2. 1.TECNOLODIAS SGBD RELACIONALES
+%-----------------------------------------------------------
+
+\subsection{Tecnologias utilizadas en SGBD Relacionales: Despliegue en 3SGBD} \label{pto21}
+
+En este apartado se explican los sistemas gestores de Bases de Datos escogidos, el proceso de instalación de cada uno de ellos y su puesta en marcha de la base de datos \textbf{Ensembl} (sin índices, ni optimizaciones).
+
+
+
+Gestores elegidos:
+
+\begin{itemize}
+\item MySQL
+\item MariaDB
+\item PostgresQL
+
+\textit{Debido a dificultades técnicas decidimos cambiar Oracle por Postgree.}
+\end{itemize}
+
+
+A continuación se explica el proceso de instalación de cada gestor y puesta en marcha de la base de datos:
+
+\begin{enumerate}
+
+\item Descargar la base de datos $Ensembl$ y organismo $homo\_sapiens\_core\_92\_38.$
+
+Lo haremos usando $FireZilla$  con la dirección   
+
+\href{http://www.ensembl.org/info/data/ftp/index.html}{http://www.ensembl.org/info/data/ftp/index.html}
+%f1
+\begin{figure}[!h]
+\centering
+\includegraphics[width=32em]{img/firezilla}
+
+\caption homo\_sapiens\_core en Firezilla
+\label{fig1:fire} 
+\end{figure}
+
+\item Crear usuario y contraseña para los gestores.
+
+
+\end{enumerate}
+
+\newpage
+
+Procedimiento para cada gestor:
+
+%mariadb
+\subsubsection{MariaDB} \label{pto211}
+
+MariaDB es un sistema de gestión de bases de datos derivado de $MySQL$ con licencia GPL (General Public License). Es desarrollado por Michael (Monty) Widenius (fundador de $MySQL$), la fundación $MariaDB$ y la comunidad de desarrolladores de software libre \cite{cDB}. Tiene una alta compatibilidad con $MySQL$ ya que posee las mismas órdenes, interfaces, APIs y bibliotecas, siendo su objetivo poder cambiar un servidor por otro directamente \cite{cDB1}.
+
+
+\begin{enumerate}
+\item Entrar en el gestor a través de terminal \cite{installMDB}
+\verb|$mysql -u root -p|
+
+\begin{verbatim}
+Enter password:
+Welcome to the MariaDB monitor. Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.2.13-MariaDB Homebrew
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others. 
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+\end{verbatim}
+
+\item Ver base de datos existentes:
+
+\begin{verbatim}
+MariaDB [(none) ]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+\end{verbatim}
+
+
+
+\item Crear nueva bd
+\begin{verbatim}
+MariaDB [(none)] > create database bdb_sisa;
+\end{verbatim}
+
+
+\item Entrar en directorio que contenga los archivos e insertar estructura de tablas:
+
+\begin{verbatim}
+alu-239-204:homo_sapiens_core_92_38 nairachiclana$ mysql -u root -p 
+bdb_sisa< homo_sapiens_core_92_38.sql
+\end{verbatim}
+
+\item Comprobar que se han introducido las tablas correctamente: 
+
+\begin{verbatim}
+MariaDB [(none)]> use bdb_sisa;
+MariaDB [bdb_sisa]> show tables;
+
++---------------------------------------+
+| Tables_in_homo_sapiens_core_91_38     |
++---------------------------------------+
+| alt_allele                            |
+| alt_allele_attrib                     |
+| alt_allele_group                      |
+| analysis                              |
+| analysis_description                  |
+| assembly                              |
+| assembly_exception                    |
+| associated_group                      |
+| associated_xref                       |
+| attrib_type                           |
+| coord_system                          |
+| data_file                             |
+| density_feature                       |
+| density_type                          |
+|............                                 
+
+\end{verbatim}
+
+Ver datos de alguna de las tablas:
+\begin{verbatim}
+MariaDB [homo_sapiens_core_91_38]> describe alt_allele;
++---------------------+------------------+------+-----+---------
+| Field               | Type             | Null | Key | Default 
++---------------------+------------------+------+-----+---------
+| alt_allele_id       | int(10) unsigned | NO 
+| alt_allele_group_id | int(10) unsigned | NO 
+| gene_id             | int(10) unsigned | NO 
++---------------------+------------------+------+-----+------
+\end{verbatim}
+
+\item Volcar los datos en las tablas creadas:
+
+(Debemos estar dentro del directorio de la carpeta que contiene el archivo con los datos) \cite{cDB4}
+
+\begin{verbatim}
+alu-239-204:homo_sapiens_core_92_38 nairachiclana$ 
+mysqlimport -u root -p --fields-terminated-by='\t' 
+--fields_escaped_by=\\ bdb_sisa -L *.txt
+\end{verbatim}
+
+Para ello usaremos la clase en $Java$ que se crea la conexión con el gestor y le aplicaremos la consulta:
+
+
+
+\end{enumerate}
+
+\newpage
+%mysql
+\subsubsection{MySQL} \label{pto212}
+Se usan los mismos comandos que para $MariaDB:$
+
+\begin{verbatim}
+mysql -u root -p
+
+create database bdb_sisa;
+
+mysql -u root -p bdb_sisa< homo_sapiens_core_92_38.sql 
+
+mysqlimport -u root -p --fields-terminated-by='\t'  
+--fields_escaped_by=\\ bdb_sisa -L *.txt
+\end{verbatim}
+
+%postgree
+\subsubsection{PSQL} \label{pto213}
+
+Primero crearemos la base de datos en otro gestor (MariaDB) y luego las exportaremos a $Postgres$.
+
+\begin{enumerate}
+\item Exportar bd creadas en MariaDB a .mysql
+
+\begin{verbatim} 
+$mysqldump --compatible=postgresql 
+--default-character-set=utf8 -r bdb_sisa.mysql -u root -p 
+bdb_sisa --max_allowed_packet=512M
+\end{verbatim}
+
+Esta orden devuelve la base de datos \verb|bdb_sisa.sql| en un archivo \verb|bdb_sisa.mysql| compatible con $Postgres$.
+
+En principio con esto ya deberíamos obtener una base de datos dentro del .mysql que pudiera importar bien dentro de postgres, pero daba errores. Todos errores de sintaxis que $psql$ no era capaz de reconocer por no haber traducido bien las sentencias.
+Para arreglar este \textbf{fallo}, he recurrido al uso de un script de python que cambia la sintaxis de MySql/MariaDB a PSQL.
+
+\begin{verbatim} 
+$python db_converter.py bdb_sisa.mysql bdb_sisa.psql 
+\end{verbatim} \cite{cDB11}
+
+El archivo \verb|bdb_sisa.psql| ya si tiene una versión legible por $psql$.
+
+Con todo esto todavía seguíamos encontrando algún fallo a la hora de importar las BD, al importar empezaba bien, pero llegado a cierto punto obteníamos el siguiente fallo:
+
+\begin{verbatim} 
+ERROR: invalid input value for enum
+coord_system_attrib: "default_version,sequence_level"
+
+LINE 1: ...T INTO "coord_system" VALUES (1,1,'contig', NULL, 4, 'default_v...
+\end{verbatim}
+
+\newpage
+
+La única forma en la que hemos podido solventarlo ha sido cambiando los tipos de las variables de la base de datos. En vez de mantener $coord \ system$ como un $enumerado$ (en vista de que el script no hacía bien estos cambios), lo cambiamos por un $VARCHAR(250)$ haciendo los cambios directamente sobre la tabla en MySQL Workbench. Utilizamos la siguiente sentencia:
+
+\begin{verbatim} 
+ALTER TABLE coord_system CHANGE attrib attrib VARCHAR(250);
+\end{verbatim}
+
+Haciendo este cambio sobre todas las bases de datos, se corrige el error y ya se pueden crear las bases de datos e introducirle los datos del archivo psql correcto (\verb|bdb_sisa.psql| ).
+
+\item Crear las bases de datos:
+\begin{verbatim}
+create database bdb_sisa;
+\end{verbatim}
+
+\item Comprobar que se ha creado la bd:
+\begin{verbatim}
+$postgres=# \l
+
+bdb_sisa     | postgres | UTF8     | es_ES.UTF-8 | es_ES.UTF-8 | 
+\end{verbatim}
+
+\item Entrar a la bd y comprobar que se han creado las tablas:
+\begin{verbatim}
+$postgres=# \c bdb_sica;
+psql (10.3 (Ubuntu 10.3-1), server 9.6.8)
+You are now connected to database "bdb_sisa" as user "postgres".
+
+$bdb_sisa=# \dt
+
+public | alt_allele                            | table | postgres
+public | alt_allele_attrib                     | table | postgres
+public | alt_allele_group                      | table | postgres
+public | analysis                              | table | postgres
+.....
+\end{verbatim}
+
+\item Importar los datos dentro: 
+
+\begin{verbatim} 
+sudo -i -u postgres psql bdb_sisa < bdb_sisa.psql
+\end{verbatim}
+
+
+\end{enumerate}
+
+
+
+
+
+%------------------------------------------------------------
+% 2. 2.DISEÑO CONSULTAS
+%-----------------------------------------------------------
+
+\newpage
+\subsection{Diseño de consultas} \label{pto22}
+
+En esta sección se trabaja con el diseño de las consultas que darían soporte a la Web de esa base de datos biológica.
+
+Dado que solo tenemos un organismo en la base de datos, nuestras consultas están basadas en dicho organismo. A continuación se adjunta una imagen donde se pueden ver claramente las relaciones entre las tablas, a partir de la cual se han diseñado las consultas.
+\begin{figure}[!h]
+\includegraphics[width=35em]{img/relaciones}
+\caption Relaciones entre tablas de homo\_sapiens\_core
+\label{fig2:rel}
+\end{figure}
+\newpage
+
+%simples
+\subsubsection{Consultas simples} \label{pto221}
+
+\begin{itemize}
+\item Consulta para buscar un trozo de secuencia:
+\begin{verbatim}
+SELECT * FROM homo_sapiens_core_91_38.dna 
+WHERE sequence LIKE '%AGGTGTTA%';
+\end{verbatim}
+
+\item Consulta sobre genes:
+\begin{verbatim}
+SELECT * FROM homo_sapiens_core_91_38.gene
+\end{verbatim}
+
+\item Consultas de primers:
+\begin{verbatim}
+SELECT left_primer FROM homo_sapiens_core_91_38.marker 
+WHERE marker_id = 1;
+\end{verbatim}
+
+\item Para hacer consultas acerca de en qué cromosoma se encuentra cierto primer:
+\begin{verbatim}
+SELECT chromosome_name FROM homo_sapiens_core_91_38.marker_map_location;
+\end{verbatim}
+
+\item Consulta acerca de péptidos:
+\begin{verbatim}
+SELECT * FROM homo_sapiens_core_91_38.peptide_archive 
+WHERE peptide_seq LIKE '% GTRLPAERLQ%';
+\end{verbatim}
+
+\end{itemize}
+
+%avanzadas
+\subsubsection{Consultas avanzadas} \label{pto222}
+
+\begin{itemize}
+
+\item Consulta sobre la descripción de los genes cuyos identificadores coinciden con los alelos correspondientes:
+\begin{verbatim} 
+SELECT description
+FROM alt_allele al, gene g WHERE al.gene_id = g.gene_id
+\end{verbatim}
+
+\item Consulta de identificadores de genes iguales en las tablas de atributo y grupo:
+\begin{verbatim} 
+SELECT g.gene_id
+FROM gene g, gene_attrib ga, attrib_type aty
+WHERE g.gene_id = ga.gene_id AND ga.attrib_type_id = aty.attrib_type_id
+\end{verbatim}
+
+
+\item Consulta sobre los identificadores de los exones y genes:
+\begin{verbatim} 
+SELECT gene_id, ex.exon_id
+FROM transcript tr, exon_transcript extr, exon ex
+WHERE tr.transcript_id = extr.transcript_id 
+AND extr.exon_id = ex.exon_id
+
+\end{verbatim}
+
+
+\item  Consulta sobre el identificador del exon, fase de terminación y biotipo, ordenada:
+\begin{verbatim} 
+SELECT ex.exon_id, end_phase, biotype
+FROM transcript tr, exon_transcript extr, exon ex
+WHERE tr.transcript_id = extr.transcript_id 
+AND extr.exon_id = ex.exon_id AND biotype='miRNA'
+ORDER BY exon_id;
+\end{verbatim}
+
+
+\item Consulta agrupada:
+\begin{verbatim} 
+SELECT alt_allele, alt_allele_group_id, attrib
+FROM alt_allele al, alt_allele_group g, alt_allele_attrib at
+WHERE al.alt_allele_id = g.alt_allele_group_id 
+AND al.alt_allele_id = at.alt_allele_id 
+GROUP BY attrib
+\end{verbatim}
+
+
+\end{itemize}
+
+%\begin{verbatim} \end{verbatim}
+
+
+%-------------------------------------------------------------------------------------------------
+
+% 3.VERSIONES OPTIMIZADAS
+
+%----------------------------------------------------------------------------------------
+\newpage
+\section{Versiones optimizadas} \label{pto3} 
+
+En esta sección del documento se modifican los \textbf{índices} y \textbf{motores de almacenamiento}. Para ello vamos a crear 4 versiones de nuestra base de datos en cada gestor, cuyas características serán las definidas a continuación:
+
+%versiones
+\begin{itemize}
+\item V1: \verb|bdb_sisa|
+
+ Sin índices ni almacenamiento (Sin indices + Motor de búsqueda $MyISAM$)
+\item V2: \verb|bdb_cisa|
+
+Con índices y sin almacenamiento (Indices + Motor de búsqueda $MyISAM$)
+
+\item V3: \verb|bdb_sica|
+
+Sin índices pero con almacenamiento (Sin indices + Motor de búsqueda $InnoDB$)
+
+\item V4: \verb|bdb_cica|
+
+Con índices y con almacenamiento (Indices + Motor de búsqueda $InnoDB$)
+\end{itemize}
+
+
+%-------------------------
+%3.1.MOTORES
+%-----------------------
+
+\subsection{Motores de búsqueda} \label{pto31}
+
+En $MySQL$ existen diferentes motores de almacenamiento. Cada motor de almacenamiento trabaja con un tipo de tabla. Los dos tipos de tablas más importantes son $MyISAM$ e $InnoDB$. Aunque $MyISAM$ es la que viene por defecto, recomendamos trabajar con $InnoDB$ ya que este es el único tipo de tabla que admite \textbf{transacciones}. Enumeraremos de manera breve las propiedades de estos dos tipos de tabla:
+%myisam 
+\subsubsection{MyISAM} \label{pto311}
+\begin{itemize}
+\item Dentro de cada carpeta de base de datos existen tres tipos de archivos por cada tabla, $frm$ (formato), $MYD$ (datos) y $MYI$ (índices).
+
+\item Al no manejar transacciones es más \textbf{rápido} que $InnoDB$
+
+\item Recomendable para aplicaciones en las que dominan las \textbf{sentencias SELECT} ante los INSERT /UPDATE.
+
+\item Ausencia de características de atomicidad ya que no tiene que hacer comprobaciones de la integridad referencial, ni bloquear las tablas para realizar las operaciones, esto nos lleva como los anteriores puntos a una mayor velocidad.
+
+\end{itemize}
+%innodb
+\subsubsection{InnoDB} \label{pto312}
+\begin{itemize}
+
+
+
+\item Admite \textbf{transacciones.}
+
+\item Soporte de \textbf{claves externas e integridad referencial}
+
+
+\item Características \textbf{ACID} Atomicity, Consistency, Isolation and Durability (garantiza integridad)
+
+\item Necesitan de un archivo (o varios) situado en el directorio de datos (por defecto). Estos archivos forman el espacio de tablas y por defecto todas las bases de datos almacenan sus datos e índice en el espacio de tablas. Debajo de cada carpeta de base de datos existe un tipo de archivo por cada tabla, frm (formato). Se puede especificar que cada tabla guarde sus datos en un archivo diferente. En este caso en la carpeta de la base de datos habrá otro tipo de archivo por cada tabla, $idb$ (datos e índices). Aún así se sigue utilizando el espacio de tablas para guardar información sobre los diccionarios de datos que utiliza el servidor. 
+
+\item Aumento de rendimiento si predominan consultas $INSERT$, $UPDATE$.
+
+
+\end{itemize}
+
+MyISAM viene por defecto en las tablas de la base de datos. Para las versiones con almacenamiento optimizado (\verb|bdb_sica| y \verb|bdb_cica|), cambiaremos el motor a InnoDB con la consulta:
+
+\verb|"ALTER TABLE" + table +"ENGINE=InnoDB";|
+
+\lstinputlisting[language=Java, linerange={1-17}]{code/innoDB.java}
+
+Comprobamos que los cambios se han aplicado correctamente:
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=9em]{img/databases}
+\caption 4 versiones de la base de datos \cite{cDB15}
+\label{fig3}
+\end{figure}
+
+\begin{itemize}
+	\item \verb|bdb_sisa|
+	\begin{verbatim}
+MariaDB [bdb_sisa]> select table_name,engine from information_schema.tables 
+where table_schema='bdb_sisa';
++---------------------------------------+--------+
+| table_name                            | engine |
++---------------------------------------+--------+
+| alt_allele                            | MyISAM |
+| alt_allele_attrib                     | MyISAM |
+| alt_allele_group                      | MyISAM |
+| analysis                              | MyISAM |
+| analysis_description                  | MyISAM |
+| ......
+	\end{verbatim}
+	
+	\item \verb|bdb_cisa|
+	\begin{verbatim}
+MariaDB [bdb_cisa]> select table_name,engine from information_schema.tables 
+where table_schema='bdb_cisa';
++---------------------------------------+--------+
+| table_name                            | engine |
++---------------------------------------+--------+
+| alt_allele                            | MyISAM |
+| alt_allele_attrib                     | MyISAM |
+| alt_allele_group                      | MyISAM |
+| analysis                              | MyISAM |
+| analysis_description                  | MyISAM |
+| ......
+	\end{verbatim}
+	
+	\item \verb|bdb_sica|
+	\begin{verbatim}
+MariaDB [bdb_sica]> select table_name,engine from information_schema.tables 
+where table_schema='bdb_sica';
++---------------------------------------+--------+
+| table_name                            | engine |
++---------------------------------------+--------+
+| alt_allele                            | InnoDB |
+| alt_allele_attrib                     | InnoDB |
+| alt_allele_group                      | InnoDB |
+| analysis                              | InnoDB |
+| analysis_description                  | InnoDB |
+| ......
+\end{verbatim}
+	
+	\item \verb|bdb_cica|
+	\begin{verbatim}
+MariaDB [bdb_cica]> select table_name,engine from information_schema.tables 
+where table_schema='bdb_cica';
++---------------------------------------+--------+
+| table_name                            | engine |
++---------------------------------------+--------+
+| alt_allele                            | InnoDB |
+| alt_allele_attrib                     | InnoDB |
+| alt_allele_group                      | InnoDB |
+| ......
+	\end{verbatim}
+	
+	
+\end{itemize}
+
+
+
+
+%-------------------------
+%3.2.INDICES
+%-----------------------
+
+\subsection{Índices}  \label{pto32}
+
+En el esquema de tablas y relaciones mostrado en el apartado anterior, vemos como cada tabla tiene una clave primaria que funciona como índice por defecto. Para aumentar aún más la eficiencia (reducir el tiempo de búsqueda) crearemos nuevos índices que optimicen las consultas. 
+
+
+\begin{verbatim}
+SELECT ex.exon_id, end_phase, biotype
+FROM transcript tr, exon_transcript extr, exon ex
+WHERE tr.transcript_id = extr.transcript_id 
+     AND extr.exon_id = ex.exon_id 
+     AND biotype='miRNA'
+ORDER BY exon_id, ex.exon_id, end_phase, biotype;
+\end{verbatim}
+
+El atributo biotype, no primario, lo transformaremos en índice de la manera siguiente:\\
+
+\verb|CREATE INDEX biotype ON transcript(biotype);|\\
+
+
+
+Finalmente, tras haber creado las cuatro versiones de nuestra base de datos (con indices y almacenamiento) en cada  uno de los tres gestores, comparamos los tiempos de consulta en cada versión basándonos en la siguiente consulta. Mediremos los tiempos para la consulta
+
+\begin{verbatim}
+SELECT ex.exon_id, end_phase, biotype
+FROM transcript tr, exon_transcript extr, exon ex
+WHERE tr.transcript_id = extr.transcript_id 
+    AND extr.exon_id = ex.exon_id 
+    AND biotype='miRNA'
+\end{verbatim}
+
+%-------------------------
+%3.3.Evaluacion
+%-----------------------
+
+\newpage
+\subsection {Conclusión de los gestores relacionales} \label{pto33}
+\subsubsection{Evaluación de tiempo} \label{pto331}
+
+%TABLA TIEMPOS
+\begin{table}[!h]
+\centering
+\caption{Tiempos}
+\label{tiempos}
+\begin{tabular}{|l|l|l|l|l}
+\hline
+ & MySQL(Docker) & MariaDB  & Postgree   \\ \hline
+ bdb\_sisa & 11.96s & 2.489s  &  3.965s   \\ 
+ bdb\_sica & 2.59s &  3.273s &  4.012s   \\ 
+ bdb\_cisa & 2.02s  & 2.405s   & 2.02s   \\ 
+ bdb\_cica & 2.005s & 2.417s &  3.973   
+\end{tabular}
+\end{table}
+
+\vspace{5em}
+
+En una primera conclusión bastante evidente, las versiones de las bases de datos con índices y almacenamientos son las más rápidas y eficientes. Una característica particular de todas las versiones en los diferentes gestores es, sin duda, la presencia de índices, es lo que disminuye con diferencia los tiempos de búsqueda.\\
+
+
+Si observamos más detenidamente cada gestor, notamos una clara diferencia de tiempos en Postgres. Este gestor es el que presenta peor tiempo en un principio, sin embargo, es que tiene mejor búsqueda cuando está optimizado. Además parece que ha sido el único que ha aceptado mejor el motor de búsqueda InnoDB; puesto que MariaDB y MySQL no presentan mejoría, incluso podemos evidenciar que empeora la optimización.\\
+
+
+En el caso de MaríaDB, no hay una gran diferencia de tiempo entre las versiones. Además y cómo ya íbamos aventurando anteriormente, la mejor versión es la que tiene índices y utiliza MyISAM como motor de búsqueda.\\
+
+
+Por último, MySQL tampoco presenta grandes oscilaciones en cuanto al tiempo, pero sí mayores que en el caso de MaríaDB. Además las versión con índices y almacenamiento con motor MyISAM no sólo es mejor en tiempo de versiones, sino que supera al tiempo en MaríaDB.\\
+
+
+%%%%%%%
+%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------------------------
+
+% 4. X M L 
+
+%----------------------------------------------------------------------------------------
+
+\newpage
+\mbox{}
+\newpage
+
+\section{Tecnologías utilizadas en SGBD XML y diseño de consultas} \label{pto4} 
+%-------------------------
+%4.1.Tecnologias utilizadas en SGBD XML
+%-----------------------
+
+En este apartado vamos a trabajar con un SGBD $XML$ denominado $ExistDB$, para el cual se diseñan un modelo de datos $XML$ y se generan los datos en $XML$ para nuestra base de datos que se almacenan en el SGBD seleccionado. \\
+
+Se añade al final de este procedimiento las consultas realizadas en SQL en $XQuery$.\\
+
+Hacemos uso $Docker$, un proveedor de contenedores que aborda cada aplicación a través de contenedores virtuales.\\
+
+Para ello se ha cogido una de las bases de datos que teníamos subida a $MariaDB$ , de la cual hemos exportado exclusivamente tres tablas para basarnos en una consulta. 
+
+\subsection{Tecnologías utilizadas en SGBD XML}  \label{pto41}
+
+
+
+%docker
+\subsubsection{Docker} Como contenedor en el que se ha guardado la imagen de $ExitDB$. \label{pto411}
+
+Creación de la imagen de $Docker:$
+\begin{enumerate}
+%mysql docker
+\item Instalación imagen MySQL
+\begin{enumerate}[label*=\arabic*.]
+\item Instalación imagen  MySQL
+
+\verb|$docker pull mysql:5.7.17|
+
+\item Ejecutar la imagen 
+\begin{verbatim}
+$docker run --name mysql-container 
+-e MYSQL_ROOT_PASSWORD = secret -p 
+3306:3306 -d mysql:5.7.17
+\end{verbatim}
+Con este comando estamos ejecutando la imagen $mysql$ con el tag $5.7.1$. Se crea un contenedor con el nombre $container-name$ y expone el puerto $3306$ (local y virtual) para que podamos conectarnos con un cliente a la base de datos. Además, cuando se crea la instancia de $MySQL$, ésta se crea por defecto con el usuario root y la password la que hayamos establecido en $MYSQL\_ROOT\_PASSWORD.$ 
+
+\end{enumerate}
+%gestor docker
+\item Instalación imagen  ExistDB
+\begin{enumerate}[label*=\arabic*.]
+\item Descargar la imagen del gestor:
+
+	\verb|$docker pull evolvedbinary/exist-db:eXist-4.1.0|
+\item Ejecutar la imagen del gestor (en el puerto 9080):
+	\begin{verbatim}
+	$docker run -d -p 9080:9080 -e EXIST_ADMIN_PASSWORD=name -v 
+	localPath:/opt/exist_data/export/ davidgaya/existdb:latest|
+	\end{verbatim}
+
+\item Comprobamos que se ha creado bien la imagen:
+	\verb|$docker ps -a|
+	\begin{verbatim}
+REPOSITORY             TAG          IMAGE ID     CREATED    SIZE
+evolvedbinary/exist-db eXist-4.1.0  8aaf9e12f4b3  4 weeks ago 956MB
+mysql                  mysql	       9546ca122d3a  13 months ago 407MB
+	\end{verbatim}
+\end{enumerate}
+
+Ahora podemos acceder a $existDB$ en la dirección
+  
+$http://localhost:9080$.
+
+En $collections$ podemos seleccionar el script .xml creado y subirlo a $eXistDB$, desde donde realizaremos posteriormente las consultas correspondientes. 
+
+
+\begin{figure}[!h]
+\centering 
+\includegraphics[width=27em]{img/dockerxml2}
+\caption Interfaz ExitsDB
+\label{interfazxdb}
+\end{figure}
+\end{enumerate}
+
+%exitdb
+\subsubsection{ExitDB} Como gestor de la base de datos. \label{pto412}
+
+Esta pieza de tecnología es un poco compleja de definir debido a los ámbitos y las diferentes funcionalidades que maneja, ya que en algunos casos puede ser algo totalmente diferente de lo que podemos conocer realmente.\\
+
+Sin embargo lo que si podemos tener claro es que eXistdb es un software escrito en Java bajo la licencia LGPL, de forma nativa fue concebido para ser un motor de Base de Datos basado en documentos XML, y para ello utiliza el lenguaje de consulta desarrollado por la W3C Xquery, que no es más que XML Query Language, o en castellano Lenguaje de Consultas para XML. \cite{cDB13}\\
+
+En nuestro caso, es utilizado para cargar una base de datos en XML. Los problemas principales que se han encontrado al utilizar este gestor, a diferencia del resto, es que no soporta bases de datos en XML mayores de 4 GB. Por lo tanto nos hemos visto obligado a reducir el tamaño de la base de datos. Concretamente a tamaños inferiores a 10 Mb, para poder realizar consultas a través de XQuery.\\
+
+Soporta tanto XML, como JSON y HTML.
+
+%xquery
+\subsubsection{XQuery} Para realizar las consultas a la base de datos. \label{pto413}
+
+XQuery es un lenguaje de consulta diseñado para colecciones de datos XML que proporciona los medios para extraer y manipular información de documentos XML, o de cualquier fuente de datos que pueda ser representada mediante XML como, por ejemplo, bases de datos relacionales o documentos ofimáticos. \\
+
+XQuery utiliza expresiones XPath para acceder a determinadas partes del documento XML. Añade, además, expresiones similares a las usadas en SQL, conocidas como expresiones FLWOR. Las expresiones FLWOR toman su nombre de los 5 tipos de sentencias de las que pueden estar compuestas: FOR, LET, WHERE, ORDER BY y RETURN.\\
+
+El lenguaje se basa en el modelo en árbol de la información contenida en el documento XML, que consiste en siete tipos distintos de nodo: elementos, atributos, nodos de texto, comentarios, instrucciones de procesamiento, espacios de nombres y nodos de documentos.\\
+
+El sistema de tipos usado por el lenguaje considera todos los valores como secuencias, asumiéndose un valor simple como una secuencia de un solo elemento. Los elementos de una secuencia pueden ser valores atómicos o nodos. Los valores atómicos pueden ser números enteros, cadenas de texto, valores booleanos, etc. La lista completa de los tipos disponibles está basada en las primitivas definidas en XML Schema.\\
+
+
+
+\newpage
+%-------------------------
+%4.2.Diseño de consultas XML
+%-----------------------
+\subsection{Diseño de consultas XML-XQuery}  \label{pto42}
+
+La idea inicial de las consultas XQuery era la de realizar las consultas que ya teníamos diseñadas para SQL.\\
+
+Por ejemplo:
+
+ \begin{verbatim}
+SELECT *
+FROM exon
+WHERE transcript_id = "862540"
+ \end{verbatim}
+ 
+se podría traducir en XQuery a:
+
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+where data($x)="862540"
+return $x
+\end{verbatim}
+
+
+Sin embargo nos encontramos con un error \verb|GC overhead limit exceded|. Esto se debía a que habíamos pasado el límite de tiempo que tenía $eXistDB$ parar realizar una Query. Las soluciones que tratamos de abordar para este problema fueron diversas. Desde acceder a los ajustes de $eXistDB$ para cambiar la configuración hasta probar una infinidad de consultas. Finalmente, la solución pasó por reducir la base de datos.
+
+
+
+
+
+%REDUCION XML
+\subsubsection{Proceso de reducción de una base de datos en XML} \label{pto421}
+
+Como hemos comentado anteriormente, uno de los dos grandes problemas que nos hemos encontrado al trabajar con $eXistDB$ es el tamaño de la base de datos que teníamos. Partimos de la base de datos de \verb|homo_sapiens| que ocupa aproximadamente 9GB y nos vimos forzados a reducirla hasta un fichero como el siguiente:
+
+\begin{itemize}
+%CODIGO BD REDUCIDA
+
+\item \textbf{Proceso de reducción}
+
+\begin{enumerate}
+
+\item Guardar con \verb|dump| las tablas que nos interesan (transcript, exon y exon\_transcript):
+
+\begin{verbatim}
+mysqldump -u root -p 
+bdb_sica transcript exon exon_transcript > bdb_sica_3.sql
+\end{verbatim}
+
+
+\item Guardamos el dump generado (\verb|bdb_sica_3.sql|)dentro de una base de datos xml.
+\begin{verbatim}
+sudo mysql -u root -p 
+bdb_sica_xml < bdb_sica_3.sql
+\end{verbatim}
+
+\item Incluimos a esta base de datos los datos, aquellos cuyas tablas no se encuentras presentes no se incluyen. 
+\begin{verbatim}
+mysqlimport -u root -p 
+--fields-terminated-by="\t" --fields_escaped_by=\\ bdb_sisa -L *txt
+\end{verbatim}
+
+
+\item Ahora volvemos a hacer un dump de la base de datos, esta vez con la etiqueta de --xml para que nos genere el exportable en XML (\verb|bdb_cisa_3.xml|).
+
+\begin{verbatim}
+sudo mysql -u root -p 
+bdb_cisa_xml < bdb_cisa_3.xml
+\end{verbatim}
+\end{enumerate}
+
+Este es el proceso para reducir la base de datos a solo tres tablas. Después de probar estos ficheros que aún habiendo sido reducidos seguían ocupando demasiado espacio, nos vimos forzados a recortar la cantidad de datos de cada tabla para poder realizar las querys. Este proceso se realizó manualmente hasta llegar a lo que mostramos a continuación:
+
+
+\item \textbf{Código reducido BD}
+
+\lstinputlisting[language=xml, linerange={1-100}]{code/reducido.xml}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=40em]{img/xml_diagram}
+\caption Estructura arbol datos XML introducidos
+\label{exit0}
+\end{figure}
+
+
+Una vez reducida, la subimos así a $eXistDB$:
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=22em]{img/exitdb}}
+\caption Introducción de bd en eXistDB
+\label{exit1}
+\end{figure}
+
+
+
+\end{itemize}
+
+\newpage
+
+%CONSULTAS XML
+\subsubsection{Creación de consultas para Base de Datos reducida} \label{pto422} 
+
+Los principales problemas que tuvimos para realizar las consultas surgieron a raíz del desconocimiento de este lenguaje así como el tamaño de la base de datos que estábamos usando. Como hemos comentado anteriormente en el apartado de reducción de la DB
+Las Queries que hemos realizado son las siguientes:
+
+\begin{itemize}
+
+\item Consulta que devuelve el $transcript\_id$ dado:
+
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+where data($x)="862540"
+return $x
+\end{verbatim}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=30em]{img/xml1}}
+\caption Consulta XML 1
+\label{xml1}
+\end{figure}
+
+\item Consulta que devuelve el $gene\_id$ para un $transcript\_id$ dado:
+
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+where data($x)="862540"
+return $x/../field[@name="gene_id"]
+\end{verbatim}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=30em]{img/xml2}}
+\caption Consulta XML 2
+\label{xml2}
+\end{figure}
+
+\item Consulta que devuelve todos los datos de la tabla para un $trascript\_id$ dado:
+
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+where data($x)="862540"
+return $x/..
+\end{verbatim}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=30em]{img/xml3}}
+\caption Consulta XML 3
+\label{xml3}
+\end{figure}
+
+
+\item Consulta que devuelve la información de todas las tablas presentes filtrando por
+$transcript\_id$
+
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+return $x/..
+\end{verbatim}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=30em]{img/xml4}}
+\caption Consulta XML 4
+\label{xml4}
+\end{figure}
+
+
+\item Consulta que devuelve los biotipos en funcion de $gene\_id:$
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="gene_id"]
+return $x/../field[@name="biotype"]
+\end{verbatim}
+\end{itemize}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=30em]{img/xml5}}
+\caption Consulta XML 5
+\label{xml5}
+\end{figure}
+
+
+%-------------------------
+%4.3.Conclusion xml
+%-----------------------
+
+\newpage
+
+
+
+\subsection{Conclusión gestor XML}  \label{pto43}
+
+\subsubsection{Tiempos}  \label{pto431}
+
+\begin{itemize}
+\item 
+\begin{verbatim}
+ for $x in doc("/db/pruebecita.xml")//
+     table_data/row/field[@name="transcript_id"]
+     where data($x)="862540"
+     return $x
+\end{verbatim}
+
+$$2.018s$$
+
+\item 
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+where data($x)="862540"
+return $x/../field[@name="gene_id"]
+\end{verbatim}
+
+$$2.022s$$
+
+\item 
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+return $x/..
+\end{verbatim}
+
+$$2.027s$$
+
+\item 
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="gene_id"]
+return $x/../field[@name="biotype"]
+\end{verbatim}
+
+$$2.025s$$
+
+\item 
+\begin{verbatim}
+for $x in doc("/db/pruebecita.xml")//
+table_data/row/field[@name="transcript_id"]
+where data($x)="862540"
+return $x/.
+\end{verbatim}
+
+$$2.023s$$
+
+
+\end{itemize}
+
+Por un lado y tras el diseño de la base de datos XML , lo más adecuado sería llegar a una conclusión comparando la eficacia sobre el modelo XML o el modelo Relacional. Sin embargo, en nuestro caso, no sería una conclusión objetiva puesto que las consultas no son las mismas.\\
+
+Por otro lado, sí hay ciertas características que podemos observar tras experimentar con ambos tipos:\\
+
+En primer lugar, los datos XML son jerárquicos; mientras que los datos relacionales se representan en un modelo de relaciones lógicas. Además, los datos XML son autodescriptivos; mientras que los datos relacionales, no.\\
+
+Un documento XML contiene no sólo los datos, sino también la codificación de los datos que explica lo que son. Un solo documento puede contener distintos tipos de datos. En el modelo relacional, el contenido de los datos se define en su definición de columna. Todos los datos de una columna deben tener el mismo tipo de datos.\\
+
+Tras estas diferencias, hay otros factores que pueden influir en la decisión de qué modelo utilizar: Por ejemplo, la máxima flexibilidad frente al máximo rendimiento para la recuperación de datos. Quizás si nos guiamos por estos factores, un máximo rendimiento es más importante en la aplicación que estamos diseñando, por lo que nos seguiríamos decantando por las Relacionales. Aunque el tiempo de consultas en XML son también bastante favorables, hay que tener en cuenta que las consultas eran mucho más sencillas y no necesitaban obtener información de varias tablas a la vez.
+
+
+%-------------------------------------------------------------------------------------------------
+
+%5. NOSQL
+
+%----------------------------------------------------------------------------------------
+\newpage
+\mbox{}
+\newpage
+
+
+\section{Tecnologías utilizadas en SGBD No Relacionales y diseño de consultas} \label{pto5} 
+
+%-------------------------
+%5.1.Tecnologias utilizadas en SGBD no relacionalesº
+%-----------------------
+\subsection{Tecnologías utilizadas en SGBD No Relacionales}  \label{pto51}
+
+Los servicios de $MySQL$ están consumiendo muchos recursos de la máquina en su mayoría de CPU y IO de disco.
+Para sección donde se explica Mongo hemos cogido la base de datos previamente introducidas en $MariaDB$ y las hemos introducido en Mongo convirtiéndolas previamente a .csv \cite{cDB10}.
+
+
+%mongo
+\subsubsection{MongoDB} \label{pto511}
+
+MongoDB es un sistema de gestión de bases de datos $NoSQL$ de código abierto y orientado a documentos. Fue desarrollado en 2007 por la compañía 10gen (renombrada actualmente a MongoDB inc), y está disponible para los sistemas operativos Windows, Linux, OS X y Solaris. \\
+
+A diferencia de los sistemas de datos relacionales, MongoDB no guarda los datos en tablas, sino que en lugar de tablas, guarda los datos en documentos $BSON$. Los documentos $BSON$ son similares a los documentos $JSON$ pero con un esquema dinámico, con esto se consigue que las integraciones con datos de distintas aplicaciones, sea sencilla y rápida. \\
+
+
+Las características principales de $MongoDB$ son:
+
+\begin{itemize}
+	\item \textbf{Consultas Ad Hoc:}
+	Soporta búsqueda por campos, consultas de rangos y expresiones regulares.
+	
+	\item \textbf{Indexación:}
+	 Permite crear índices para cualquier campo y también ofrece la posibilidad de crear índices secundarios. 
+
+	\item \textbf{Replicación:}
+	 La replicación es un mecanismo de seguridad que permite tener acceso al sistema de información en casos de que surja algún problema con el servidor. $MongoDB$ soporta el tipo de replicación primario-secundario, este tipo de replicación consiste en que existe un nodo primario y el resto secundarios. El nodo primario puede ejecutar comandos de lectura y escritura, los secundarios replican los datos del primario y solo se pueden usar para lectura o para copias de seguridad. En caso de que el nodo primario caiga, los nodos secundarios tienen la capacidad de elegir a un nuevo nodo primario. A este sistema de nodos primario-secundarios, se le denomina “replica set”.
+
+	\item \textbf{Balanceo de carga:}
+	$MongoDB$ ofrece la posibilidad de escalar de forma horizontal empleando el concepto de “shard”. Esto permite que los datos sean distribuidos en distintos servidores, balanceando la carga entre ellos, de manera que ninguno de ellos tenga sobrecarga de datos. De esta manera, se pueden incorporar nuevos servidores proporcionando mucha flexibilidad.
+	\item \textbf{Almacenamiento:} 
+	Es posible utilizar $MongoDB$ como un sistema de archivos, permitiendo utilizar la ventaja de capacidad proporcionada por el balanceo de carga, así como la replicación de datos para el almacenamiento mediante múltiples servidores. Esto permite que los datos puedan ser distribuidos y replicados varias veces, proporcionando un sistema eficiente, con tolerancia a fallos y balanceos de carga.
+	\item \textbf{Agregación:}
+	Proporciona un framework de agregación que permite realizar operaciones similares a las operaciones $GROUP BY$ de SQL. Además, $MongoDB$ también ofrece la función $MapReduce$ que puede ser utilizada para el procesamiento por lotes de datos y las operaciones de agregación.
+	\item \textbf{Ejecución de $JavaScript$ desde el lado del servidor: }
+	Tiene la capacidad de realizar consultas usando JavaScript, enviándolas directamente a la base de datos.
+
+\end{itemize}
+
+\subsubsection{JSON} \label{pto512}
+
+Formato en el que se guardan los datos de las bases de datos.
+
+$MongoDB$ almacena documentos $BSON$ ($JSON$ en binario) con esquemas dinámicos, haciendo que la integración de datos sea facil.
+$BSON$ es el formato que usa mongo para almacenar e intercambiar datos (en binario).
+
+\begin{itemize}
+\item BSON proporciona menos almacenamiento y mejor funcinamiento.
+\item Los campos extensos incluyen un campo de tamño para facilitar su lectura. (Algunos BSON son mayores que su equivalente JSON)
+\end{itemize}
+
+
+\subsubsection{JavaScript}  \label{pto513} 
+
+Para hacer las consultas.
+
+Concretamente, hemos utilizado el comando \verb|find()|.
+Esta función se ejecuta sobre la colección que elijamos, dando como resultado la colección.
+
+Además, dentro de \verb|find| podemos estipular diferentes parámetros que en sintaxis de $MySQL$ que equivaldrían al $where$.
+
+
+%-------------------------
+%5.2. Consultas Nosql
+%-----------------------
+\newpage
+\subsection{Diseño de consultas NOSQL}  \label{pto52}
+
+\subsubsection{Migración de datos a MongoDB} \label{pto521}
+
+Para ello, hemos usado un programa que hemos encontrado en el siguiente repositorio de Github:
+
+\url{https://github.com/lovette/mysql-to-mongohttps://github.com/lovette/mysql-to-mongo}
+
+Dispondremos de las siguientes herramientas:
+
+\begin{verbatim}
+my2mo-fields
+my2mo-export
+my2mo-import
+\end{verbatim}
+
+
+\begin{enumerate}
+\item \textbf{Crear un entorno} donde trabajar cómodamente: 
+\begin{verbatim}
+$mkdir -p /opt/my2mo/csvdata 
+$cd /opt/my2mo
+\end{verbatim}
+\textit{(Directorio para hacer migraciones)}
+
+\item Creación del \textbf{Schema} (Estructura de la bd sin los datos): 
+\begin{verbatim}
+$mysqldump --no-data [Base de datos] > [Schema Base de datos].sql
+\end{verbatim}
+
+\item \textbf{Migración de los campos} de las tablas:
+
+Crear la estructura de datos para ser importada a MongoDB: 
+\begin{verbatim}
+$sudo bash my2mo-fields.sh [Shema Base de datos].sql
+
+Generating tables and fields from schema.sql...
+...country ...ip2nation ...language
+...offer
+...source ...updater ...updater_country ...updater_offer ...updater_user ...version
+7 fields 2 fields 5 fields
+15 fields 2 fields
+18 fields
+3 fields
+2 fields 13 fields
+4 fields
+Found 10 tables
+Output saved to /srv/mgo
+Tables saved to import.tables Field files saved to fields/*.fields
+\end{verbatim}
+
+\item Creación del \textbf{archivo de importación}:
+
+\begin{verbatim}
+$sudo bash my2mo-export.sh [directorio]/ [BASE DE DATOS]
+
+Generating SQL to export 10 tables...
+export.sql saved to /srv/mgo
+Data files will be saved to /srv/mgo/csvdata on the
+MySQL server, make sure this directory exists, and is empty
+ 
+\end{verbatim}
+
+\item Creación de los \textbf{ficheros csv} para la importación
+
+Al ejecutar el siguiente comando importamos los datos de la BD MySQL hacia ficheros csv de cada tabla: 
+\begin{verbatim} 
+$mysql -uroot -p < export.sql
+\end{verbatim}
+
+\item Migración de \textbf{csv a MongoDB:}
+\begin{verbatim} 
+$my2mo-import.sh [directorio] [NOMBRE BASE DE DATOS]
+Importing 10 tables into Mongo database 'toolboox'...
+...country
+...ip2nation
+...language
+...offer
+...source
+...updater
+...updater_country
+...updater_offer
+...updater_user
+...version
+Done!
+\end{verbatim}
+
+\item Comprobamos que se ha importado correctamente:
+\begin{verbatim} 
+$mongo
+MongoDB shell version: 2.4.14 connecting to: test
+$ > use toolboox;
+switched to db toolboox
+$ > show collections;
+country ip2nation language
+offer
+source
+updater updater_country updater_offer updater_user version
+\end{verbatim}
+
+\end{enumerate}
+
+
+
+\subsubsection{Consultas para MongoDB a traves de JavaScript} \label{pto522}
+
+\begin{itemize}
+\item Consulta que coge de la bd la tabla $alt\_allele$ y devuelve toda la fila en la que la columna $alt\_allele\_id$ es $96950$
+ 
+\verb|> db.alt_allele.find({alt_allele_id: 96950})|
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=35em]{img/allelenumfind}
+\caption Consulta 1 MongoDB
+\label{mongo1}
+\end{figure}
+
+\item Devuelve todos los valores de la tabla  $alt\_allele$ 
+
+\verb|> db.alt_allele.find()|
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=28em]{img/allelefind}
+\caption Consulta 2 MongoDB
+\label{mongo2}
+\end{figure}
+
+
+\item Devuelve todos los valores de la tabla  $dna$ 
+
+\verb|> db.dna.find()|
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=35em]{img/mongofind}
+\caption Consulta 3 MongoDB
+\label{mongo3}
+\end{figure}
+\end{itemize}
+
+
+%-------------------------
+%5.3.Conclusion NOSQL
+%-----------------------
+
+
+\subsection{Conclusión gestor NoSQL}  \label{pto53}
+
+
+Analizamos las ventajas y desventajas de una base de datos NoSQL:\\
+
+\textbf{Ventajas} de una base de datos NoSQL:
+\begin{itemize}
+\item	La escalabilidad y su carácter descentralizado. Soportan estructuras distribuidas.
+\item	Suelen ser bases de datos mucho más abiertos y flexibles. Permiten adaptarse a necesidades de proyectos mucho más fácilmente que los modelos de Entidad Relación.
+\item	Se pueden hacer cambios de los esquemas sin tener que parar bases de datos.
+\item	Optimización de consultas en base de datos para grandes cantidades de datos.
+\end{itemize}
+
+\textbf{Desventajas} de una base de datos NoSQL:
+
+\begin{itemize}
+\item No todas las bases de datos NoSQL contemplan la atomicidad de las instrucciones y la integridad de los datos. 
+\item Soporte multiplataforma. Aún quedan muchas mejoras en algunos sistemas para que soporten sistemas operativos que no sean Linux.
+\end{itemize}
+
+
+
+\textbf{NoSQL vs SQL}: Cuándo utilizar qué tipo de base de datos
+\begin{itemize}
+\item	Cuando los datos deben ser consistentes sin dar posibilidad al error utilizar una base de datos relacional. SQL.
+\item	Análisis de grandes cantidades de datos en modo lectura. NoSQL
+\end{itemize}
+
+
+
+%-------------------------------------------------------------------------------------------------
+
+%6.Clases Java
+%----------------------------------------------------------------------------------------
+\newpage
+\section{Clases Java} \label{pto6} 
+
+
+%CON BD
+\subsection{Conexión Bases de datos} \label{pto61}
+
+\begin{itemize}
+
+%postgree
+\item Connection \textbf{Postgree} \label{pto611}
+\lstinputlisting[language=java, linerange={1-200}]{code/ConnectionPostgree.java}
+ 
+ %mariadb
+ \item Connection \textbf{MariaDB} \label{pto612}
+\lstinputlisting[language=java, linerange={13-200}]{code/ConnectionMariaDB.java}
+
+ %mysql
+\item Connection \textbf{MySQL} (Con Docker, en puerto 3307) \label{pto613}
+\lstinputlisting[language=java, linerange={13-200}]{code/ConnectionMysql.java}
+
+ %XML
+\item Connection \textbf{XML} \label{pto614}
+\lstinputlisting[language=java, linerange={13-200}]{code/ConnectionXML.java}
+
+ %Mongodb
+\item Connection \textbf{MongoDB} \label{pto615}
+\lstinputlisting[language=java, linerange={13-200}]{code/ConnectionXML.java}
+\end{itemize}
+%CON INTERFAZ
+\subsection{Conexión BD-Interfaz} \label{pto62}
+\begin{itemize}
+%petitionController
+\item PetitionController \label{pto621}
+\lstinputlisting[language=java, linerange={1-200}]{code/PetitionController.java}
+\end{itemize}
+
+
+
+
+
+%-------------------------------------------------------------------------------------------------
+
+%7.  INTERFAZ
+
+%----------------------------------------------------------------------------------------
+\newpage
+\mbox{}
+\newpage
+
+\section{Interfaz gráfica} \label{pto7}
+
+Nuestra interfaz ha sido desarrollada en AngularJS, un framework de JavaScript. Es una aplicaciones web de una sola página. Sigue el Modelo Vista Controlador (MVC).
+
+\subsection{Tecnologías usadas} \label{pto71}
+	\subsubsection{Angular JS} \label{pto711}
+	
+	$AngularJS$ es un framework de $JavaScript$ de código abierto, mantenido por Google, que se utiliza para crear y mantener aplicaciones web de una sola página. Su objetivo es aumentar las aplicaciones basadas en navegador con capacidad de Modelo Vista Controlador (MVC), en un esfuerzo para hacer que el desarrollo y las pruebas sean más fáciles.
+	
+Nos ha aportado una serie de funcionalidades extra a nuestro proyecto que nos han facilitado mucho el trabajar con los datos y realizar las peticiones.
+	\subsubsection{JavaScript} \label{pto712}
+	
+	$JavaScritp$ lo hemos utilizado para implementar las diferentes funcionalidades de la interfaz.
+	
+	\subsubsection{HTML} \label{pto713}
+	
+$HTML$ nos ha servido para generar la estructura visible de nuestra página web.
+
+	\subsubsection{CSS} \label{pto714}
+	
+	$CSS$ aunque poco, porque hemos usado principalmente $Bootstrap$ (una librería con diseños de CSS ya hechos),  también los hemos aplicado directamente para modificar levemente algún diseño.
+	
+%DISEÑO INTERFAZ	
+
+\newpage
+
+
+\subsection{Diseño interfaz} \label{pto72}
+
+
+En primer lugar ha sido necesario diseñar una \textbf{primera aproximación} para la interfaz, tenía el siguiente aspecto:
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=25em]{img/Captura}
+\label{int1}
+\caption Primer prototipo interfaz
+\end{figure}
+
+
+Conforme hemos ido avanzando en el proyecto, hemos visto posibles mejoras que podríamos hacerle a la interfaz y la hemos seguido cambiando hasta tener el siguiente resultado:
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=22em]{img/showdown}}
+\frame{\includegraphics[width=27em]{img/showdown2}}
+\caption Prototipo final interfaz
+\label{int2}
+\end{figure}
+
+Esta interfaz ha sido diseñada utilizando \textbf{Angular 4} y pretende facilitar el uso de nuestro programa, así como, gestionar una cola de búsqueda en la que podemos ir diciendo las columnas en las que queremos buscar, las tablas que queremos buscar, las condiciones en las que queremos buscar el group By. Esto genera una lista de peticiones (que se irán visualizando en la tabla inferior) y son enviadas a través de un método post hacia el \textbf{backEnd}. \\
+
+Después de realizar la consulta correspondiente, nos devolverá por pantalla el tiempo que ha tardado cada una de las consultas creadas.
+
+El código de la implementación de la interfaz está adjuntado dentro del proyecto. Destacar los scripts $app.component.html$ y $app.component.ts$, donde podemos encontrar el código $HTML$ y $JavaScritpt$ implementado en la interfaz respectivamente.\\
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=35em]{img/int_tiempos}}
+\caption Tiempos consultas para las 4 DB
+\label{int3}
+\end{figure}
+
+%-------------------------------------------------------------------------------------------------
+
+%8. INTEGRACION
+%----------------------------------------------------------------------------------------
+\newpage
+\mbox{}
+\newpage
+
+\section{Integración Back-end Front-end} \label{pto8}
+
+Hasta este momento solo teníamos una interfaz cuyos datos no llegaban a ningún sitio, y un $back-end$ donde había que meter los datos a mano, y estos tampoco eran devueltos más que a la pantalla de la consola.
+
+Con esta integración podremos escribir datos en la interfaz, que llegarán al código, este se conectará con el gestor correspondiente, y volveremos a ver sus resultados devueltos en la interfaz. Así, podremos tratar únicamente con la interfaz web, siendo el código una caja negra.
+
+\subsection{Tecnologías usadas} \label{pto81}
+	\subsubsection{Spring-Boot 2.0.2} \label{pto811}
+	
+	$Spring-Boot$ lo hemos utilizado para ejecutar nuestra aplicación y como una aplicación de $Spring$ en la que tenemos ya integrando la interfaz y el servidor
+	\subsubsection{Spring Tool Suite 3.8.1} \label{pto812}
+	
+	$Spring-Tool-Suite$ lo hemos utilizado como herramienta para realizar la integración de ambas partes del proyecto.
+	\subsubsection{Java 1.8} \label{pto813}
+	
+	Lenguaje del $Back-End$. En el hemos realizado el código que realiza las conexiones $Front-End$-$Back-end$.
+	
+	\subsubsection{Maven} \label{pto814} 
+	
+	Contiene todas las librerías y dependencias en un archivo $pom.xml$, permitiéndonos exportar el proyecto, siendo usable sin la consecuente instalación de estas.
+	
+	Las dependencias requeridas han sido:
+	
+	\begin{itemize}
+
+	\item $org.exist-db$
+	\item $org.springframework.boot$
+	\item $org.json$
+	\item $org.slf4j$
+	\item $postgresql$
+	\item $mysql$
+	\item $org.mongodb$
+	\item $com.google.code.gson$
+	\end{itemize}
+	
+%INTEGRACIÓN	
+\subsection{Proceso integración} \label{pto82}
+
+Partiendo de que tenemos que tener instalado \textbf{Node.js} y \textbf{@angular/cli}. Pasamos a hacer el setUp del proyecto de Spring. En primer lugar, tenemos comprobar en el script pom.xml, que tenemos la siguiente dependencia.
+
+\begin{verbatim}
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+\end{verbatim}
+
+
+En el proyecto vamos a crear un controlador muy simple, en \begin{verbatim}/source/main/java/com/example/demo\end{verbatim}.
+
+\begin{verbatim}
+    package com.javasampleapproach.restful.controller;
+ 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+ 
+@RestController
+public class WebRestController {
+ 
+	@RequestMapping("/api/hi")
+	public String hi() {
+		return "Hello World from Restful API";
+	}
+}
+\end{verbatim}
+
+Después de esto, y teniendo nuestro proyecto de angular hecho, pasaremos a integrarlo. Para ello solo tendremos que abrir \textbf{SpringToolSuite} y ir a \textbf{Import // General // Projects from Folder or Archieve} y \textbf{aceptar}.\\
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[scale=0.7]{img/Captura1}}
+\caption Importación Angular
+\label{itg1}
+\end{figure}
+
+\newpage
+
+Con esto ya tendremos el proyecto de \textbf{Angular} importado, tiendo algo tal que así:
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[scale=0.6]{img/Captura2}}
+\caption Estructura de carpetas Spring-boot
+\label{itg2}
+\end{figure}
+
+
+Lo sigueinte que vamos a hacer será quitar la carpeta de \textit{node\_modules} ya que no es necesaria ahora. Para ello, vamos a las \textbf{Propiedades} del proyecto y elegimos \textbf{Resource // Resource  // Filter}. Escribimos lo siguiente:
+
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[scale=0.6]{img/Captura3}}
+\caption Eliminación node-modules
+\label{itg3}
+\end{figure}
+
+Ahora ya habremos removido \textbf{Node\_modules} del \textbf{SpringToolSuite}.
+
+
+Llegados a este punto tenemos un proyecto de \textbf{Spring} en el que tenemos el Back-End, y otro proyecto de \textbf{Angular} ya importado en el que tenemos implementado el Front-End. Que trabajan independientemente en los puertos $8080$ y $4200$.\\
+
+El objetivo ahora es de establecer una dirección para el cliente y que las peticiones al servidor vayan a diferentes direcciones /api.\\
+
+Para ello primero tenemos que crear en nuestro proyecto de \textbf{Angular}. Un archivo llamado \textbf{proxy.config.json} con lo siguiente.
+
+\begin{verbatim}
+{
+	"/api": {
+		"target": "http://localhost:8080",
+		"secure": false
+	}
+}
+    
+\end{verbatim}
+
+Además vamos a editar el fichero \textbf{package.json}, dejándolo tal que así:
+
+\begin{verbatim}
+...
+"scripts": {
+    "ng": "ng",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+},
+ ...
+\end{verbatim}
+
+Construimos y corremos el proyecto \textbf{RestfulService} con SpringBoot en el puerto 8080. Y corremos el cliente en el puerto 4200.
+
+En este momento, haciendo una petición a \begin{verbatim}http://localhost:4200/api/hi\end{verbatim} obtenemos el siguiente resultado:
+
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[scale=0.6]{img/Captura4}}
+\caption Primera prueba backend en integración
+\label{itg4}
+\end{figure}
+
+Para final solo queda ejecutar dentro de la carpeta de la interfaz el comando \begin{verbatim}ng build -prod\end{verbatim} 
+
+Obtenemos como resultado una carpeta que se llama \textbf{dist}. Copiando los archivos que aparezcan en esta carpeta dentro de la ruta del servidor \textbf{/src/main/resources/static}. Ya podemos contruir y ejecutar nuestro \textbf{SpringBoot server}.
+
+
+\begin{itemize}
+    \item Build: \begin{verbatim}mvn clean install \end{verbatim}
+    Es necesario volver a ejecutar este comando y copiar la carpeta \verb|dist| cada vez que queramos realizar un cambio en la interfaz.
+    \item Run: \begin{verbatim}mvn spring-boot:run \end{verbatim}
+    Para hacer cambios en el backEnd basta con volver a correr la app.
+\end{itemize}
+
+Como resultado ya podremos ejecutar nuestro servidor en la dirección
+ \url{http://localhost:8080/api/hi}\, tendremos el servidor. Y en la dirección \url{http://localhost:8080} tendremos la interfaz.
+
+
+
+%----------------------------------------------------------------------------------------
+
+%9. Conclusiones
+
+%----------------------------------------------------------------------------------------
+\newpage
+\mbox{}
+\newpage
+
+\section{Conclusiones y Trabajos Futuros} \label{pto9}
+
+Durante este capítulo se exponen las conclusiones obtenidas durante el desarrollo del proyecto, los conocimientos adquiridos y se añade alguna propuesta para trabajos futuros. \\
+
+\subsection{Conclusiones} \label{pto91}
+
+Teniendo en cuenta los análisis realizados y el rendimiento obtenido, el objetivo principal era la elección de uno de los sistemas gestores para una determinada consulta. Sin embargo y a raíz de los resultados obtenidos, no podemos llegar a una conclusión clara y definitiva. \\
+
+En primera instancia podríamos escoger ExistDB dada su rapidez de respuesta, la cual se contrarresta con las dificultades técnicas de instalación, sumadas a la poca capacidad de almacenamiento de la que dispone. Por tanto, este gestor es útil en nuestro caso, para consultas sencillas que no requieran de una movilización de gran cantidad de datos para consulta.\\
+
+Por otro lado, las bases de datos No Relaciones presentan sus ventajas y desventajas. En nuestro caso, ha respondido adecuadamente a las consultas realizadas, dando como resultado un tiempo de respuesta muy satisfactorio. A la hora quizás de elegir entre Relacional y No Relacional, habría que tener en cuenta qué se prefiere perjudicar, si la consistencia de los datos o el análisis de grandes cantidades de éstos.\\
+
+Dado que en nuestro caso ambas facetas son importantes, no nos decantaríamos por ninguna metodología en una visión general del proyecto. Si bien es cierto que sólo disponíamos de un organismo de prueba, y que por tanto la información no era excesiva, nos podríamos situar más a favor de las bases relaciones. Las cuales además nos han resultado más fácil de implementar y nos han permitido jugar con diferentes versiones de implementación.\\
+
+Si analizamos más profundamente los resultados de las Bases Relaciones, ya comentábamos que Postgres era, no con diferencia, el gestor que mejor tiempo nos había proporcionado para una versión optimizada con almacenamiento e índices. Sin embargo no sería del todo ético apostar por él directamente, puesto que a lo largo del proyecto nos fijamos en que el motor seleccionado para MaríaDB y MySQL no les hacía justicia, es decir, comparando resultados entre Postgres versión optimizada versus MariaDB/MySQL con almacenamiento MyISAM, no hay apenas diferencia en cuanto al tiempo de consulta.\\
+
+En conclusión, aunque el objetivo principal era elegir un gestor frente a determinada consulta, hemos logrado obtener una aplicación que compara tiempos frente a diferentes consultas y te permite escoger qué gestor se ajustaría más a ellas para así redirigirte a estos y obtener los resultados.\\
+
+\subsection{Trabajos Futuros} \label{pto92}
+
+Hemos pensado que al sistema desarrollado se le podrían realizar mejoras o añadir nuevas funcionalidades, para convertirlo en una herramienta más completa. \\
+
+Una de las mejoras que se podría aplicar, es aumentar la base de datos usada. De manera que tengamos una herramienta que nos permita analizar consultas de diferentes organismos además del Homo Sapiens. Además se podrían añadir más tipos de consultas en las seccion de NoSQL, solventando previamente los problemas definidos, para poder realizar un análisis más exhaustivo que nos permita elegir más objetivamente el tipo de gestor a utilizar. Incluso podríamos intentar añadir el resto de los gestores de bases de datos a Docker y a través de Docker compose sincronizar los gestores con la aplicación y de esta forma podríamos hacer que la aplicación se puediera usar en diferentes ordenadores sin tener que cumplir requisitos tan estrictos como tener MySQL en el puerto 3307, y tener todos los gestores que quieras usar en tu máquina.\\
+
+
+%-------------------------------------------------------------------------------------------------
+
+%10.GITHUB 
+%----------------------------------------------------------------------------------------
+\newpage
+
+\section{GitHub} \label{pto10}
+\url{https://github.com/nairachiclana/Gestor-BDB}
+\vspace{2em}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=35em]{img/github_diagram}
+\caption Localización códigos en repositorio
+\label{git0}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=35em]{img/commits}}
+\caption Total commits 
+\label{git1}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=35em]{img/additions}}
+\caption Total additions
+\label{git2}
+\end{figure}
+
+
+\begin{figure}[!h]
+\centering
+\frame{\includegraphics[width=35em]{img/deletions}}
+\caption Total deletions
+\label{git3}
+\end{figure}
+
+
+
+
+%--------------------------------------------------------
+%-------------------------------------------------------------------------------------------------
+
+%11WBGRAFIA
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+\section{Webgrafía} \label{pto11}
+
+
+\begin{thebibliography}{9}
+
+    
+\bibitem{emsembl},
+   Ensembl,
+    \emph{EMBL - EBI emsembl}.
+    \verb|http://www.ensembl.org/index.html|,
+    1992,
+    (Accesed: 2018).
+    
+\bibitem{FTPemsembl},
+   Ensembl FTP site,
+    \emph{EMBL - EBI emsembl FTP site}.
+    \verb|ftp://ftp.ensembl.org/pub/|,
+    1992,
+    (Accesed: 2018).
+    
+\bibitem{BDRelacional},
+   Relational database,
+    \emph{Wikipedia}.
+    \verb|https://es.wikipedia.org/wiki/Base_de_datos_relacional|,
+    (Accesed: 2018).
+    
+\bibitem{BDRelacional},
+   Relational database,
+    \emph{Wikipedia}.
+    \verb|https://es.wikipedia.org/wiki/Base_de_datos_relacional|,
+    (Accesed: 2018).
+    
+\bibitem{installMDB},
+   MariaDB,
+    \emph{MariaDB}.
+    \verb|https://mariadb.com/resources/blog/installing-mariadb-10010-mac-os-x-homebrew|,
+    (Accesed: 2018).
+    
+\bibitem{cDB},
+   Introducción MariaDB,
+    \emph{Introducción MariaDB}.
+    \verb|https://elbinario.net/wp-content/uploads/2015/02/Introducci\%C3\%B3n_a_MariaDB1.pdf|,
+    (Accesed: 2018).
+    
+\bibitem{cDB1},
+   Introducción MariaDB,
+    \emph{Introducción MariaDB}.
+    \verb|http://migueleonardortiz.com.ar/mysql/creacion-base-de-datos-en-mariadb-mysql/1070|,
+    (Accesed: 2018).
+    
+\bibitem{cDB2},
+   Tutorial MariaDB,
+    \emph{Introducción MariaDB}.
+    \verb|http://codigoxules.org/tutorial-mariadb-creando-tablas-en-sql/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB3},
+   MySQL,
+    \emph{Instalación MySQL}.
+    \verb|http://migueleonardortiz.com.ar/mysql/instalando-mysql-en-windows-o-linux/1015|,
+    (Accesed: 2018).
+    
+\bibitem{cDB4},
+   MySQL,
+    \emph{Data transfer MySQL}.
+    \verb|https://m.ensembl.org/info/docs/webcode/mirror/install/ensembl-data.html|,
+    (Accesed: 2018).
+    
+\bibitem{cDB5},
+   MySQL GitHub repository,
+    \emph{MySQL GitHub repository}.
+    \verb|https://gist.github.com/hofmannsven/9164408|,
+    (Accesed: 2018).
+    
+\bibitem{cDB6},
+   AngularJS,
+    \emph{Documentation of AngularJS}.
+    \verb|https://angular.io/docs|,
+    (Accesed: 2018).
+    
+\bibitem{cDB7},
+   W3Schools,
+    \emph{HTML \& CSS tutorials}.
+    \verb|https://www.w3schools.com/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB8},
+   PSQL,
+    \emph{Postgres documentation}.
+    \verb|https://www.postgresql.org/docs/9.2/static/app-psql.html|,
+    (Accesed: 2018).
+    
+\bibitem{cDB9},
+   MongoDB,
+    \emph{MongoDB documentation}.
+    \verb|https://docs.mongodb.com/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB10},
+   MySQL to MongoDB,
+    \emph{GitHub repository of scripts of Mysql to MongoDB}.
+    \verb|https://github.com/lovette/mysql-to-mongo|,
+    (Accesed: 2018).
+    
+\bibitem{cDB11},
+   MySQL to PSQL,
+    \emph{GitHub repository of scripts of Mysql to PSQL}.
+    \verb|https://github.com/lanyrd/mysql-postgresql-converter|,
+    (Accesed: 2018).
+    
+\bibitem{cDB12},
+   MySQL,
+    \emph{MySQL documentation}.
+    \verb|https://dev.mysql.com/doc/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB13},
+   eXistDB driver,
+    \emph{eXistDB documentation}.
+    \verb|https://github.com/eXist-db|,
+    (Accesed: 2018).
+    
+\bibitem{cDB13},
+   eXistDB documentation,
+    \emph{eXistDB}.
+    \verb|http://exist-db.org/exist/apps/doc/|,
+    (Accesed: 2018).
+    
+    
+\bibitem{cDB14},
+   PSQL JDBC driver,
+    \emph{JDBC PSQL driver}.
+    \verb|https://jdbc.postgresql.org/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB15},
+   Bloc de arsys.es,
+    \emph{¿MyISAM o InnoDB?}.
+    \verb|https://www.arsys.es/blog/programacion/myisam-o-innodb-elige-tu-motor-de-almacenamiento-mysql/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB16},
+    Spring Documentation,
+    \emph{Spring Documentation}.
+    \verb|https://spring.io/docs|,
+    (Accesed: 2018).
+    
+\bibitem{cDB17},
+    Stack overflow,
+    \emph{Stack Overflow}.
+    \verb|https://es.stackoverflow.com/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB18},
+    MongoDB driver,
+    \emph{Java Mongo Driver}.
+    \verb| https://mongodb.github.io/mongo-java-driver/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB19},
+    JSON split,
+    \emph{JSON In Java}.
+    \verb| https://mvnrepository.com/artifact/org.json/json|,
+    (Accesed: 2018).
+    
+\bibitem{cDB20},
+    Maven dependecies,
+    \emph{Maven dependencies}.
+    \verb|https://mvnrepository.com/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB21},
+    Bootstrap,
+    \emph{Bootstrap design}.
+    \verb|https://getbootstrap.com/|,
+    (Accesed: 2018).
+    
+\bibitem{cDB21},
+    Docker,
+    \emph{Docker documentation}.
+    \verb|https://docs.docker.com/|,
+    (Accesed: 2018).
+
+\bibitem{cDB22},
+    Docker,
+    \emph{Docker documentation}.
+    \verb|https://docs.oracle.com/cd/B28359_01/appdev.111/b28369/xdb23jv1.htm#g1050187|,
+    (Accesed: 2018).
+
+    
+
+
+\end{thebibliography}
+
+\end{document}
+
+%%%%%%%%
+%%%%%%%%%%55
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%PONER REPOSITORIO GITHUB
